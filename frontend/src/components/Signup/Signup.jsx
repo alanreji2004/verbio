@@ -6,7 +6,6 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { db, app, storage } from '../../firebase';
-import { TailSpin } from 'react-loader-spinner';
 
 
 const Signup = () => {
@@ -122,33 +121,13 @@ const Signup = () => {
         </div>
         <div className={styles.btnDiv}>
           <button className={styles.btn} onClick={signUpWithEmail} disabled={loading}>
-                {loadingEmail ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <TailSpin
-                height="20"
-                width="20"
-                color="#5c27fe"
-                ariaLabel="loading"
-                />
-            <span>Signing you up...</span>
-        </div>
-            ) : 'Sign up'}
+                {loadingEmail ? 'Signing you up...' : 'Sign up'}
         </button>
         </div>
         <div className={styles.google}>
           <img src={googleIcon} alt="Google" className={styles.googleIcon} />
           <div className={styles.googleText} onClick={signUpWithGoogle} disabled={loading} >
-            {loading ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <TailSpin
-                height="20"
-                width="20"
-                color="#5c27fe"
-                ariaLabel="loading"
-                />
-            <span>Signing you up...</span>
-        </div>
-            ) : "Continue with Google"}
+            {loading ? 'Signing you up...': "Continue with Google"}
           </div>
         </div>
         
