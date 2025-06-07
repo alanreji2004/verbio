@@ -27,6 +27,9 @@ const Landing = () => {
             <div className={styles.line2}></div>
             <div className={styles.line3}></div>
         </div>
+        <div className={styles.rectangle}>
+            <div className={styles.innerRectangle}></div>
+        </div>
       </div>
     </div>
   )

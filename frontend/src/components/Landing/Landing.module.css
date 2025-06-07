@@ -204,3 +204,47 @@ body {
         width: 60px;
     }
 }
+
+.rectangle{
+    position: absolute;
+    width: 120px;
+    height: 170px;
+    right: 6.4rem;
+    top: 18rem;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7e8da;
+
+}
+.innerRectangle{
+    width: 90px;
+    height: 130px;
+    border-radius: 15px;
+    background-color: #FDF8F3;
+}
+@media screen and (max-width: 768px) {
+    .rectangle{
+        right: 2rem;
+        top: 19rem;
+        width: 100px;
+        height: 150;
+    }
+    .innerRectangle{
+        width: 70px;
+        height: 130px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .rectangle{
+        right: 2rem;
+        top: 27rem;
+        width: 100px;
+        height: 150px;
+    }
+    .innerRectangle{
+        width: 70px;
+        height: 120px;
+    }
+}
