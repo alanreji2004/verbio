@@ -129,6 +129,9 @@ input:focus {
   font-weight: 500;
   cursor: pointer;
   transition: background 0.3s ease;
+  text-align: center;
+  justify-content: center;
+  padding: 10px 80px;
 }
 
 .btn:hover {

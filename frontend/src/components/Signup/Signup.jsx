@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import styles from './Signup.module.css'
 import googleIcon from '../../assets/googleIcon.webp'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { db, app, storage } from '../../firebase';
 import { TailSpin } from 'react-loader-spinner';
@@ -15,6 +16,10 @@ const Signup = () => {
     const provider = new GoogleAuthProvider();
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [loadingEmail,setLoadingEmail] = useState(false);
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     const handleLoginClick = () => {
     navigate('/login')
@@ -33,6 +38,7 @@ const Signup = () => {
         name: user.displayName,
         email: user.email,
         photoURL: user.photoURL,
+        createdAt : new Date(),
         lastLogin: new Date(),
         },{ merge: true });
 
@@ -43,6 +49,57 @@ const Signup = () => {
     }finally{
         setLoading(false);
     }
+  };
+
+  const isValidEmail = (email) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
+  const signUpWithEmail = async () =>{
+    try{
+        setError(null);
+        setLoadingEmail(true);
+
+        if (!isValidEmail(email)) {
+            setError("Please enter a valid email address.");
+            setLoadingEmail(false);
+            return;
+        }
+
+        if (!name.trim()) {
+            setError("Please enter your name.");
+            setLoadingEmail(false);
+            return;
+        }
+
+        const userCredential = await createUserWithEmailAndPassword(auth,email,password);
+        const user = userCredential.user;
+
+        await setDoc(doc(db,"users",user.uid),{
+            name : name,
+            email : user.email,
+            createdAt : new Date(),
+            lastLogin : new Date()
+        });
+
+        navigate('/home');
+    }catch (error) {
+        console.error(error.message);
+        if (error.code === 'auth/email-already-in-use') {
+            setError('Email is already in use.');
+        }
+        else if (error.code === 'auth/weak-password') {
+            setError('Password should be at least 6 characters.');
+        }  
+        else if(error.code === 'auth/account-exists-with-different-credential'){
+            setError('Email id already in use with different credential.')
+        }
+        else {
+            setError('Signup failed. Please try again.');
+        }
+        } finally {
+            setLoadingEmail(false);
+        }
   };
 
   return (
@@ -59,12 +116,24 @@ const Signup = () => {
         <div className={styles.brand}>Verbio</div>
         <div className={styles.signUp}>Create Account</div>
         <div className={styles.inputs}>
-          <input type="text" placeholder="Name" />
-          <input type="text" placeholder="Email" />
-          <input type="password" placeholder="Password" />
+          <input type="text" placeholder="Name" value={name} onChange={(e)=>setName(e.target.value)}/>
+          <input type="text" placeholder="Email" value={email} onChange = {(e) => setEmail(e.target.value)} />
+          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
         </div>
         <div className={styles.btnDiv}>
-          <button className={styles.btn}>Sign up</button>
+          <button className={styles.btn} onClick={signUpWithEmail} disabled={loading}>
+                {loadingEmail ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <TailSpin
+                height="20"
+                width="20"
+                color="#5c27fe"
+                ariaLabel="loading"
+                />
+            <span>Signing you up...</span>
+        </div>
+            ) : 'Sign up'}
+        </button>
         </div>
         <div className={styles.google}>
           <img src={googleIcon} alt="Google" className={styles.googleIcon} />
