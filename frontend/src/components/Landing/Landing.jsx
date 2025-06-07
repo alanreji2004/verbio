@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './Landing.module.css'
+import { Link, useNavigate } from "react-router-dom"
 
 const Landing = () => {
   return (
@@ -7,7 +8,7 @@ const Landing = () => {
       <nav className={styles.navbar}>
         <div className={styles.logo}>Verbio</div>
         <div className={styles.navButtons}>
-          <button className={styles.signIn}>Sign in</button>
+           <Link to="/login" className={styles.signIn}>Sign in</Link>
           <button className={styles.getStarted}>Get Started</button>
         </div>
       </nav>

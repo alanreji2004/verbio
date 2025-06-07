@@ -1,0 +1,228 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #FDF8F3;
+  font-family: "Noto Sans", sans-serif;
+  overflow-x: hidden;
+}
+
+.mainDiv {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #FDF8F3;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 1rem;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #080926;
+}
+
+.logoName {
+  text-decoration: none;
+  color: #080926;
+}
+
+.navButtons {
+  display: flex;
+  gap: 1rem;
+}
+
+.navbtn {
+  background-color: #f7e8da;
+  border: none;
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  color: #080926;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.navbtn:hover {
+  background-color: #eddac7;
+}
+
+.loginSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  gap: 20px;
+}
+
+.brand {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #080926;
+}
+
+.signIn {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #080926;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 12px;
+}
+
+input {
+  height: 46px;
+  width: 100%;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+input:focus {
+  border-color: #999;
+}
+
+.btnDiv {
+  width: 100%;
+}
+
+.btn {
+  width: 100%;
+  height: 46px;
+  border: none;
+  border-radius: 8px;
+  background-color: #f7e8da;
+  font-size: 1rem;
+  color: #080926;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #eddac7;
+}
+
+.google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+
+.googleIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.googleText {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #080926;
+}
+
+.forgot {
+  font-size: 0.9rem;
+  color: #080926;
+  cursor: pointer;
+}
+
+.tosignup {
+  font-size: 0.9rem;
+  color: #080926;
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    padding: 0 0.5rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .navbtn {
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .loginSection {
+    max-width: 90%;
+    padding: 1.5rem;
+  }
+
+  .brand {
+    font-size: 1.8rem;
+  }
+
+  .signIn {
+    font-size: 1.3rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .navbar {
+    padding: 0 0.5rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .navbtn {
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .loginSection {
+    padding: 1rem;
+  }
+
+  .inputs input,
+  .btn {
+    font-size: 0.95rem;
+  }
+
+  .googleText {
+    font-size: 0.95rem;
+  }
+}

@@ -5,12 +5,17 @@ import {
   RouterProvider,
 } from "react-router-dom"
 import Landing from "./components/Landing/Landing"
+import Login from "./components/Login/Login"
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Landing />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ])
 
