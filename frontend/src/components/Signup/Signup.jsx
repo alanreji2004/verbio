@@ -1,14 +1,15 @@
 import React from 'react'
-import { Link,useNavigate } from 'react-router-dom'
-import styles from './Login.module.css'
+import { Link, useNavigate } from 'react-router-dom'
+import styles from './Signup.module.css'
 import googleIcon from '../../assets/googleIcon.webp'
 
-const Login = () => {
-    const navigate = useNavigate()
+const Signup = () => {
+  const navigate = useNavigate()
 
-    const handleSignupClick = () => {
-        navigate('/signup')
-    }
+  const handleLoginClick = () => {
+    navigate('/login')
+  }
+
   return (
     <div className={styles.mainDiv}>
       <nav className={styles.navbar}>
@@ -16,30 +17,30 @@ const Login = () => {
           <Link to="/" className={styles.logoName}>Verbio</Link>
         </div>
         <div className={styles.navButtons}>
-          <button className={styles.navbtn} onClick={handleSignupClick}>SignUp</button>
+          <button className={styles.navbtn} onClick={handleLoginClick}>Login</button>
         </div>
       </nav>
-      <div className={styles.loginSection}>
+      <div className={styles.signupSection}>
         <div className={styles.brand}>Verbio</div>
-        <div className={styles.signIn}>Sign in</div>
+        <div className={styles.signUp}>Create Account</div>
         <div className={styles.inputs}>
+          <input type="text" placeholder="Name" />
           <input type="text" placeholder="Email" />
           <input type="password" placeholder="Password" />
         </div>
         <div className={styles.btnDiv}>
-          <button className={styles.btn}>Sign in</button>
+          <button className={styles.btn}>Sign up</button>
         </div>
         <div className={styles.google}>
           <img src={googleIcon} alt="Google" className={styles.googleIcon} />
           <div className={styles.googleText}>Continue with Google</div>
         </div>
-        <div className={styles.forgot}>Forgot Password?</div>
-        <div className={styles.tosignup}>Don't have an account?
-            <Link to="/signup"> Sign up</Link>
+        <div className={styles.tologin}>Already have an account?
+            <Link to="/login"> Login</Link>
         </div>
       </div>
     </div>
   )
 }
 
-export default Login
+export default Signup
