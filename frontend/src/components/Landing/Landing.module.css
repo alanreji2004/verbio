@@ -248,3 +248,27 @@ body {
         height: 120px;
     }
 }
+
+.square{
+    position: absolute;
+    width: 120px;
+    height: 100px;
+    top: 22.3rem;
+    right: 16.5rem;
+    border-radius: 15px;
+    background-color: #f7e8da;
+}
+
+@media screen and (max-width: 768px) {
+    .square{
+        right: 10rem;
+        top: 23.3rem;
+    }
+}
+
+@media screen and (max-width: 480px){
+    .square{
+        right: 10rem;
+        top: 30.1rem;
+    }
+} 
