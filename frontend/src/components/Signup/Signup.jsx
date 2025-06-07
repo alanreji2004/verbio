@@ -5,6 +5,8 @@ import googleIcon from '../../assets/googleIcon.webp'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import { doc, setDoc } from "firebase/firestore";
 import { db, app, storage } from '../../firebase';
+import { TailSpin } from 'react-loader-spinner';
+
 
 const Signup = () => {
     const navigate = useNavigate()
@@ -66,7 +68,19 @@ const Signup = () => {
         </div>
         <div className={styles.google}>
           <img src={googleIcon} alt="Google" className={styles.googleIcon} />
-          <div className={styles.googleText} onClick={signUpWithGoogle} disabled={loading} >{loading ? "Signing you up..." : "Continue with Google"}</div>
+          <div className={styles.googleText} onClick={signUpWithGoogle} disabled={loading} >
+            {loading ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <TailSpin
+                height="20"
+                width="20"
+                color="#5c27fe"
+                ariaLabel="loading"
+                />
+            <span>Signing you up...</span>
+        </div>
+            ) : "Continue with Google"}
+          </div>
         </div>
         
         {error && (
