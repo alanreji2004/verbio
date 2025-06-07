@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import styles from './Signup.module.css'
 import googleIcon from '../../assets/googleIcon.webp'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
+import { doc, setDoc } from "firebase/firestore";
 import { db, app, storage } from '../../firebase';
 
 const Signup = () => {
@@ -11,6 +12,7 @@ const Signup = () => {
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleLoginClick = () => {
     navigate('/login')
@@ -19,15 +21,25 @@ const Signup = () => {
     const signUpWithGoogle = async () => {
     try {
         setError(null);
+        setLoading(true);
 
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
         const idToken = await user.getIdToken();
 
+        await setDoc(doc(db, "users", user.uid), {
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        lastLogin: new Date(),
+        },{ merge: true });
+
         navigate('/home');
     } catch (error) {
         console.error(error.message);
         setError('Something Went Wrong...Try again!');
+    }finally{
+        setLoading(false);
     }
   };
 
@@ -54,7 +66,7 @@ const Signup = () => {
         </div>
         <div className={styles.google}>
           <img src={googleIcon} alt="Google" className={styles.googleIcon} />
-          <div className={styles.googleText} onClick={signUpWithGoogle}>Continue with Google</div>
+          <div className={styles.googleText} onClick={signUpWithGoogle} disabled={loading} >{loading ? "Signing you up..." : "Continue with Google"}</div>
         </div>
         
         {error && (
