@@ -10,6 +10,7 @@ body {
   background-color: #FDF8F3;
   font-family: "Noto Sans", sans-serif;
   overflow-x: hidden;
+  overflow-y:hidden;
 }
 
 .wrapper {
@@ -149,7 +150,32 @@ body {
     right: 6.4rem;
     border-radius: 15px;
     background-color: #f7e8da;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 1rem;
+    justify-content: center;
 }
+.line1{
+    height: 5px;
+    width: 50px;
+    background-color: #dbcec1;
+    border-radius: 10px;
+}
+.line2{
+    height: 5px;
+    width: 80px;
+    background-color: #dbcec1;
+    border-radius: 10px;
+}
+.line3{
+    height: 5px;
+    width: 50px;
+    background-color: #dbcec1;
+    border-radius: 10px;
+}
+
+
 @media screen and (max-width: 768px) {
     .notes{
         right: 2rem;
@@ -157,12 +183,24 @@ body {
         width: 100px;
         height: 100px;
     }
+    .line1,.line3{
+        width: 40px;    
+    }
+    .line2{
+        width: 60px;
+    }
 }
 @media screen and (max-width: 480px) {
     .notes{
         right: 2rem;
-        top: 10rem;
+        top: 19rem;
         width: 100px;
         height: 100px;
+    }
+    .line1,.line3{
+        width: 40px;    
+    }
+    .line2{
+        width: 60px;
     }
 }
