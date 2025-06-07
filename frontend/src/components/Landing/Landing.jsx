@@ -31,6 +31,7 @@ const Landing = () => {
             <div className={styles.innerRectangle}></div>
         </div>
         <div className={styles.square}></div>
+        <div className={styles.oval}></div>
       </div>
     </div>
   )
