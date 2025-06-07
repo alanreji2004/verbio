@@ -62,7 +62,7 @@ body {
 }
 
 .content {
-  margin-top: 8rem;
+  margin-top: 4rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -131,4 +131,14 @@ body {
   .navButtons {
     gap: 0.8rem;
   }
+}
+.semiCircle{
+    width: 120px;
+    height: 120px;
+    margin-left: 0px;
+    position: absolute;
+    left: 0;
+    bottom: 0rem;
+    border-top-right-radius: 120px;
+    background-color: #f7e8da;
 }
