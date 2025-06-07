@@ -1,14 +1,35 @@
-import React from 'react'
+import {React,useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from './Signup.module.css'
 import googleIcon from '../../assets/googleIcon.webp'
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
+import { db, app, storage } from '../../firebase';
 
 const Signup = () => {
-  const navigate = useNavigate()
+    const navigate = useNavigate()
 
-  const handleLoginClick = () => {
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+    const [error, setError] = useState(null);
+
+    const handleLoginClick = () => {
     navigate('/login')
-  }
+    }
+
+    const signUpWithGoogle = async () => {
+    try {
+        setError(null);
+
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        const idToken = await user.getIdToken();
+
+        navigate('/home');
+    } catch (error) {
+        console.error(error.message);
+        setError('Something Went Wrong...Try again!');
+    }
+  };
 
   return (
     <div className={styles.mainDiv}>
@@ -33,8 +54,15 @@ const Signup = () => {
         </div>
         <div className={styles.google}>
           <img src={googleIcon} alt="Google" className={styles.googleIcon} />
-          <div className={styles.googleText}>Continue with Google</div>
+          <div className={styles.googleText} onClick={signUpWithGoogle}>Continue with Google</div>
         </div>
+        
+        {error && (
+          <p style={{ color: 'red', marginTop: '10px', textAlign: 'center' }}>
+            {error}
+          </p>
+        )}
+
         <div className={styles.tologin}>Already have an account?
             <Link to="/login"> Login</Link>
         </div>
