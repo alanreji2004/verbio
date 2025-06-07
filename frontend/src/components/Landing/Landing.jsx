@@ -22,6 +22,7 @@ const Landing = () => {
           <button className={styles.getStarted}>Get Started</button>
         </div>
         <div className={styles.semiCircle}></div>
+        <div className={styles.notes}></div>
       </div>
     </div>
   )

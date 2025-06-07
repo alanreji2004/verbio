@@ -142,3 +142,27 @@ body {
     border-top-right-radius: 120px;
     background-color: #f7e8da;
 }
+.notes{
+    position:absolute;
+    width: 120px;
+    height: 120px;
+    right: 6.4rem;
+    border-radius: 15px;
+    background-color: #f7e8da;
+}
+@media screen and (max-width: 768px) {
+    .notes{
+        right: 2rem;
+        top: 10rem;
+        width: 100px;
+        height: 100px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .notes{
+        right: 2rem;
+        top: 10rem;
+        width: 100px;
+        height: 100px;
+    }
+}
