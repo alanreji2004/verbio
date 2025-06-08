@@ -32,7 +32,7 @@ const Login = () => {
             await setDoc(doc(db, "users", user.uid), {
                 lastLogin: new Date(),
                 },{ merge: true });
-            navigate('/home');
+            navigate('/profile');
         }
         catch(error){
             console.log(error.message);
@@ -66,7 +66,7 @@ const Login = () => {
             }, { merge: true });
 
 
-            navigate('/home');
+            navigate('/profile');
         }
         catch(error){
             console.error(error.code, error.message);

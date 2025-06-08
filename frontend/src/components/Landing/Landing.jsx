@@ -3,13 +3,17 @@ import styles from './Landing.module.css'
 import { Link, useNavigate } from "react-router-dom"
 
 const Landing = () => {
+    const navigate = useNavigate()
+    const handleGetStarted = () => {
+        navigate('/home')
+    }
   return (
     <div className={styles.wrapper}>
       <nav className={styles.navbar}>
         <div className={styles.logo}>Verbio</div>
         <div className={styles.navButtons}>
            <Link to="/login" className={styles.signIn}>Sign in</Link>
-          <button className={styles.getStarted}>Get Started</button>
+          <button className={styles.getStarted} onClick={handleGetStarted}>Get Started</button>
         </div>
       </nav>
       <div className={styles.content}>
@@ -20,7 +24,7 @@ const Landing = () => {
           Express your ideas an share <br />your stories with the world
         </div>
         <div className={styles.buttonDiv}>
-          <button className={styles.getStarted}>Get Started</button>
+          <button className={styles.getStarted} onClick={handleGetStarted}>Get Started</button>
         </div>
         <div className={styles.semiCircle}></div>
         <div className={styles.notes}>

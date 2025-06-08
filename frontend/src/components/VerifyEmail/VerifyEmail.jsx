@@ -40,7 +40,7 @@ const VerifyEmail = () => {
           });
         }
 
-        navigate('/home');
+        navigate('/profile');
       }
     }, 5000);
 

@@ -41,7 +41,7 @@ const Signup = () => {
         lastLogin: new Date(),
         },{ merge: true });
 
-        navigate('/home');
+        navigate('/profile');
     } catch (error) {
         console.error(error.message);
         setError('Something Went Wrong...Try again!');
