@@ -118,7 +118,9 @@ const Login = () => {
             {error}
           </p>
         )}
-        <div className={styles.forgot}>Forgot Password?</div>
+        <div className={styles.forgot}>
+          <Link to="/reset-password">Forgot Password?</Link>
+        </div>
         <div className={styles.tosignup}>Don't have an account?
             <Link to="/signup"> Sign up</Link>
         </div>
