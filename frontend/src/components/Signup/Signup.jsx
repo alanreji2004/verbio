@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import styles from './Signup.module.css'
 import googleIcon from '../../assets/googleIcon.webp'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {createUserWithEmailAndPassword,sendEmailVerification } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { db, app, storage } from '../../firebase';
 
@@ -74,14 +74,16 @@ const Signup = () => {
         const userCredential = await createUserWithEmailAndPassword(auth,email,password);
         const user = userCredential.user;
 
-        await setDoc(doc(db,"users",user.uid),{
-            name : name,
-            email : user.email,
-            createdAt : new Date(),
-            lastLogin : new Date()
-        });
 
-        navigate('/home');
+        await  sendEmailVerification(user);
+        navigate('/verify-email', {
+            state: {
+            uid: user.uid,
+            name: name,
+            email: user.email,
+        }
+    });
+
     }catch (error) {
         console.error(error.message);
         if (error.code === 'auth/email-already-in-use') {

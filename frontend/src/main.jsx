@@ -8,6 +8,8 @@ import Landing from "./components/Landing/Landing"
 import Login from "./components/Login/Login"
 import Signup from "./components/Signup/Signup"
 import Home from "./components/Home/Home"
+import Profile from "./components/Profile/Profile"
+import VerifyEmail from "./components/VerifyEmail/VerifyEmail"
 
 
 const router = createBrowserRouter([
@@ -26,6 +28,14 @@ const router = createBrowserRouter([
     {
     path: "/home",
     element: <Home />,
+  },
+  {
+    path: "/verify-email",
+    element: <VerifyEmail />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
   },
 ])
 
