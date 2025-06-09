@@ -4,7 +4,7 @@ import styles from './Signup.module.css'
 import googleIcon from '../../assets/googleIcon.webp'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import {createUserWithEmailAndPassword,sendEmailVerification } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db, app, storage } from '../../firebase';
 
 
@@ -24,31 +24,37 @@ const Signup = () => {
     navigate('/login')
     }
 
-    const signUpWithGoogle = async () => {
+  const signUpWithGoogle = async () => {
     try {
-        setError(null);
-        setLoading(true);
-
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-        const idToken = await user.getIdToken();
-
-        await setDoc(doc(db, "users", user.uid), {
-        name: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-        createdAt : new Date(),
-        lastLogin: new Date(),
-        },{ merge: true });
-
-        navigate('/profile');
+      setError(null)
+      setLoading(true)
+      const userCredential = await signInWithPopup(auth, provider)
+      const user = userCredential.user
+      const userDocRef = doc(db, "users", user.uid)
+      const userDocSnap = await getDoc(userDocRef)
+      if (!userDocSnap.exists()) {
+        await setDoc(userDocRef, {
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          createdAt: new Date(),
+          lastLogin: new Date()
+        })
+      } else {
+        await setDoc(userDocRef, {
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          lastLogin: new Date()
+        }, { merge: true })
+      }
+      navigate('/profile')
     } catch (error) {
-        console.error(error.message);
-        setError('Something Went Wrong...Try again!');
-    }finally{
-        setLoading(false);
+      setError("Sign in Failed, Try again..")
+    } finally {
+      setLoading(false)
     }
-  };
+  }
 
   const isValidEmail = (email) => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

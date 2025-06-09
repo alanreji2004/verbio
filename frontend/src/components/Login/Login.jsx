@@ -4,7 +4,7 @@ import styles from './Login.module.css'
 import googleIcon from '../../assets/googleIcon.webp'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db, app, storage } from '../../firebase';
 
 const Login = () => {
@@ -21,27 +21,37 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password,setPassword] = useState('');
 
-    const signInWithGoogle = async () =>{
-        try{
-            setError(null);
-            setLoading(true);
-
-            const userCredential = await signInWithPopup(auth,provider);
-            const user = userCredential.user;
-
-            await setDoc(doc(db, "users", user.uid), {
-                lastLogin: new Date(),
-                },{ merge: true });
-            navigate('/profile');
-        }
-        catch(error){
-            console.log(error.message);
-            setError("Sign in Failed,Try again..")
-        }
-        finally{
-            setLoading(false);
-        }
-    };
+    const signInWithGoogle = async () => {
+    try {
+      setError(null)
+      setLoading(true)
+      const userCredential = await signInWithPopup(auth, provider)
+      const user = userCredential.user
+      const userDocRef = doc(db, "users", user.uid)
+      const userDocSnap = await getDoc(userDocRef)
+      if (!userDocSnap.exists()) {
+        await setDoc(userDocRef, {
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          createdAt: new Date(),
+          lastLogin: new Date()
+        })
+      } else {
+        await setDoc(userDocRef, {
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          lastLogin: new Date()
+        }, { merge: true })
+      }
+      navigate('/profile')
+    } catch (error) {
+      setError("Sign in Failed, Try again..")
+    } finally {
+      setLoading(false)
+    }
+  }
 
     const isValidEmail = (email) => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
