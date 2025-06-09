@@ -13,8 +13,10 @@ const Profile = () => {
   const [name, setName] = useState(null);
   const [oneLiner,setOneLiner] = useState(null);
   const [bio,setBio] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
@@ -37,6 +39,7 @@ const Profile = () => {
       } else {
         navigate('/login');
       }
+      setLoading(false);
     });
     return () => unsubscribe();
   }, [auth, navigate]);
@@ -52,6 +55,7 @@ const Profile = () => {
 
   return (
     <div className={styles.mainDiv}>
+       {loading && <div className={styles.spinner}></div>}
       <nav className={styles.navbar}>
         <div className={styles.logo}>
           <Link to="/" className={styles.logoName}>Verbio</Link>
@@ -73,12 +77,12 @@ const Profile = () => {
         </div>
         {name && <div className={styles.userName}>{name}</div>}
         <div className={styles.oneliner}>
-          {oneLiner?{oneliner}:'Documenting thoughts with purpose.'}
+          {oneLiner? oneLiner:'Documenting thoughts with purpose.'}
         </div>
         <div className={styles.bioDiv}>
           <div className={styles.bioHeading}>Bio</div>
           <div className={styles.bio}>
-            {bio?{bio}:'Sharing thoughts and stories on Verbio — where ideas find their voice. Stay curious, stay inspired.'}
+            {bio? bio:'Sharing thoughts and stories on Verbio — where ideas find their voice. Stay curious, stay inspired.'}
           </div>
         </div>
         <div className={styles.buttonDiv}>
