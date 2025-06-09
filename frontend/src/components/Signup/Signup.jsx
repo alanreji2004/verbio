@@ -42,9 +42,6 @@ const Signup = () => {
         })
       } else {
         await setDoc(userDocRef, {
-          name: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL,
           lastLogin: new Date()
         }, { merge: true })
       }

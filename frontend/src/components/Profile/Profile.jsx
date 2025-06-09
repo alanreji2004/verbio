@@ -11,6 +11,7 @@ const Profile = () => {
   const [user, setUser] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
   const [name, setName] = useState(null);
+  const [oneLiner,setOneLiner] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -23,9 +24,11 @@ const Profile = () => {
           if (data.photoURL) {
             setProfileImage(data.photoURL);
           }
-          if (data.name) {
-            setName(data.name);
+          setName(data.name);
+          if(data.oneLiner){
+            setOneLiner(data.oneLiner);
           }
+
         }
       } else {
         navigate('/login');
@@ -61,6 +64,8 @@ const Profile = () => {
           )}
         </div>
         {name && <div className={styles.userName}>{name}</div>}
+        {oneLiner? (<div className={styles.oneLiner}>{oneLiner}</div>):
+            ( <div className={styles.oneLiner}>Documenting thoughts with purpose.</div> ) }
       </div>
     </div>
   );
