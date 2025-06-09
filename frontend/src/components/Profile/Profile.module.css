@@ -48,7 +48,7 @@ body {
   gap: 1rem;
 }
 
-.navbtn {
+.btn {
   background-color: #f7e8da;
   border: none;
   padding: 0.6rem 1.4rem;
@@ -59,7 +59,7 @@ body {
   transition: background 0.3s ease;
 }
 
-.navbtn:hover {
+.btn:hover {
   background-color: #eddac7;
 }
 
@@ -112,4 +112,36 @@ body {
   color: #080926;
   font-weight: 600;
   text-align: center;
+}
+
+.bio{
+    width: 500px;
+    text-align: center;
+}
+.bioDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 8px;
+}
+.bioHeading{
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+.buttonDiv{
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+@media screen and (max-width: 768px) {
+    .bio{
+        width: 80%;
+    }
+}
+@media screen and (max-width: 480px) {
+    .bio{
+        width: 80%;
+    }
 }

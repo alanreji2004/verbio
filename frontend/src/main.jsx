@@ -11,6 +11,7 @@ import Home from "./components/Home/Home"
 import Profile from "./components/Profile/Profile"
 import VerifyEmail from "./components/VerifyEmail/VerifyEmail"
 import ResetPassword from "./components/ResetPassword/ResetPassword"
+import EditProfile from "./components/EditProfile/EditProfile"
 
 
 const router = createBrowserRouter([
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/reset-password",
     element: <ResetPassword />,
+  },
+  {
+    path: "/edit-profile",
+    element: <EditProfile />,
   },
 ])
 

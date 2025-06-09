@@ -12,6 +12,7 @@ const Profile = () => {
   const [profileImage, setProfileImage] = useState(null);
   const [name, setName] = useState(null);
   const [oneLiner,setOneLiner] = useState(null);
+  const [bio,setBio] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -28,6 +29,9 @@ const Profile = () => {
           if(data.oneLiner){
             setOneLiner(data.oneLiner);
           }
+          if(data.bio){
+            setBio(data.bio);
+          }
 
         }
       } else {
@@ -42,6 +46,10 @@ const Profile = () => {
     navigate('/login');
   };
 
+  const handleEdit = () =>{
+    navigate('/edit-profile')
+  }
+
   return (
     <div className={styles.mainDiv}>
       <nav className={styles.navbar}>
@@ -49,7 +57,7 @@ const Profile = () => {
           <Link to="/" className={styles.logoName}>Verbio</Link>
         </div>
         <div className={styles.navButtons}>
-          <button className={styles.navbtn} onClick={handleSignOut}>Signout</button>
+          <button className={styles.btn} onClick={handleSignOut}>Signout</button>
         </div>
       </nav>
       <div className={styles.profile}>
@@ -64,8 +72,19 @@ const Profile = () => {
           )}
         </div>
         {name && <div className={styles.userName}>{name}</div>}
-        {oneLiner? (<div className={styles.oneLiner}>{oneLiner}</div>):
-            ( <div className={styles.oneLiner}>Documenting thoughts with purpose.</div> ) }
+        <div className={styles.oneliner}>
+          {oneLiner?{oneliner}:'Documenting thoughts with purpose.'}
+        </div>
+        <div className={styles.bioDiv}>
+          <div className={styles.bioHeading}>Bio</div>
+          <div className={styles.bio}>
+            {bio?{bio}:'Sharing thoughts and stories on Verbio — where ideas find their voice. Stay curious, stay inspired.'}
+          </div>
+        </div>
+        <div className={styles.buttonDiv}>
+          <button className={styles.btn}>Write</button>
+          <button className={styles.btn} onClick={handleEdit}>Edit Profile</button>
+        </div>
       </div>
     </div>
   );
