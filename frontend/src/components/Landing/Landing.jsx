@@ -56,7 +56,7 @@ const Landing = () => {
             </div>
          : <Link to="/login" className={styles.signIn}>Sign in</Link>
         }   
-          <button className={styles.getStarted} onClick={handleGetStarted}>Get Started</button>
+          {/* <button className={styles.getStarted} onClick={handleGetStarted}>Get Started</button> */}
         </div>
       </nav>
       <div className={styles.content}>
