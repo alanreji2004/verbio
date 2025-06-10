@@ -177,6 +177,7 @@ body {
     width: 120px;
     height: 120px;
     right: 6.4rem;
+    top: 8.4rem; /*this*/
     border-radius: 15px;
     background-color: #f7e8da;
     display: flex;

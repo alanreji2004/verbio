@@ -59,6 +59,16 @@ const Home = () => {
           </div>
         </div>
       </nav>
+      <div className={styles.notes}>
+        <div className={styles.line1}></div>
+        <div className={styles.line2}></div>
+        <div className={styles.line3}></div>
+      </div>
+      <div className={styles.rectangle}>
+          <div className={styles.innerRectangle}></div>
+      </div>
+      <div className={styles.square}></div>
+      <div className={styles.oval}></div>
     </div>
   )
 }

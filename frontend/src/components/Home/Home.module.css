@@ -151,3 +151,158 @@ body {
 .writeIcon{
     cursor: pointer;
 }
+
+.notes{
+    position:fixed;
+    width: 120px;
+    height: 120px;
+    right: 6.4rem;
+    top: 8.4rem;
+    border-radius: 15px;
+    background-color: #f7e8da;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 1rem;
+    justify-content: center;
+}
+.line1{
+    height: 5px;
+    width: 50px;
+    background-color: #dbcec1;
+    border-radius: 10px;
+}
+.line2{
+    height: 5px;
+    width: 80px;
+    background-color: #dbcec1;
+    border-radius: 10px;
+}
+.line3{
+    height: 5px;
+    width: 50px;
+    background-color: #dbcec1;
+    border-radius: 10px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .notes{
+        right: 2rem;
+        top: 10rem;
+        width: 100px;
+        height: 100px;
+    }
+    .line1,.line3{
+        width: 40px;    
+    }
+    .line2{
+        width: 60px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .notes{
+        right: 2rem;
+        top: 19rem;
+        width: 100px;
+        height: 100px;
+    }
+    .line1,.line3{
+        width: 40px;    
+    }
+    .line2{
+        width: 60px;
+    }
+}
+
+.rectangle{
+    position: fixed;
+    width: 120px;
+    height: 170px;
+    right: 6.4rem;
+    top: 18rem;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7e8da;
+
+}
+.innerRectangle{
+    width: 90px;
+    height: 130px;
+    border-radius: 15px;
+    background-color: #FDF8F3;
+}
+@media screen and (max-width: 768px) {
+    .rectangle{
+        right: 2rem;
+        top: 19rem;
+        width: 100px;
+        height: 150;
+    }
+    .innerRectangle{
+        width: 70px;
+        height: 130px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .rectangle{
+        right: 2rem;
+        top: 27rem;
+        width: 100px;
+        height: 150px;
+    }
+    .innerRectangle{
+        width: 70px;
+        height: 120px;
+    }
+}
+
+.square{
+    position: fixed;
+    width: 120px;
+    height: 100px;
+    top: 22.3rem;
+    right: 16.5rem;
+    border-radius: 15px;
+    background-color: #f7e8da;
+}
+
+@media screen and (max-width: 768px) {
+    .square{
+        right: 10rem;
+        top: 23.3rem;
+    }
+}
+
+@media screen and (max-width: 480px){
+    .square{
+        right: 10rem;
+        top: 30.1rem;
+    }
+} 
+
+.oval{
+    position: absolute;
+    width: 40px;
+    height:70px;
+    right: 18.5rem;
+    top: 17.5rem;
+    border-radius: 50%;
+    transform: rotate(45deg);
+    background-color: #f7e8da;
+}
+
+@media screen and (max-width: 768px) {
+    .oval{
+        right: 12rem;
+        top: 18rem;
+    }
+}
+
+@media screen and (max-width: 480px){
+    .oval{
+        top: 25.5rem;
+    }
+}
