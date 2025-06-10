@@ -143,7 +143,6 @@ body {
 @media screen and (max-width: 480px) {
     .bio{
         width: 300px;
-        border: 1px solid black;
     }
 }
 .spinner {
