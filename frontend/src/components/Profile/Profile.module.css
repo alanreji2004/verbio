@@ -36,6 +36,7 @@ body {
   font-size: 1.8rem;
   font-weight: 600;
   color: #080926;
+  cursor: pointer;
 }
 
 .logoName {
@@ -163,4 +164,42 @@ body {
   to {
     transform: translate(-50%, -50%) rotate(360deg);
   }
+}
+
+
+  @media screen and (max-width: 768px) {
+  .navbar {
+    padding: 0 0.5rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .navbtn {
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+  }
+
+}
+
+@media screen and (max-width: 480px) {
+  .navbar {
+    padding: 0 0.5rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .navbtn {
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .inputs input,
+  .btn {
+    font-size: 0.95rem;
+  }
+
 }

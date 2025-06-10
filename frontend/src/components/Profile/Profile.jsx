@@ -46,7 +46,7 @@ const Profile = () => {
 
   const handleSignOut = async () => {
     await signOut(auth);
-    navigate('/login');
+    navigate('/');
   };
 
   const handleEdit = () =>{
@@ -58,7 +58,7 @@ const Profile = () => {
        {loading && <div className={styles.spinner}></div>}
       <nav className={styles.navbar}>
         <div className={styles.logo}>
-          <Link to="/" className={styles.logoName}>Verbio</Link>
+          <Link to="/home" className={styles.logoName}>Verbio</Link>
         </div>
         <div className={styles.navButtons}>
           <button className={styles.btn} onClick={handleSignOut}>Signout</button>
