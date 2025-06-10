@@ -108,6 +108,8 @@ const Signup = () => {
 
   return (
     <div className={styles.mainDiv}>
+      {loading && <div className={styles.spinner}></div>}
+      {loadingEmail && <div className={styles.spinner}></div>}
       <nav className={styles.navbar}>
         <div className={styles.logo}>
           <Link to="/" className={styles.logoName}>Verbio</Link>

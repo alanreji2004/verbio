@@ -94,6 +94,8 @@ const Login = () => {
 
   return (
     <div className={styles.mainDiv}>
+      {loading && <div className={styles.spinner}></div>}
+      {emailLoading && <div className={styles.spinner}></div>}
       <nav className={styles.navbar}>
         <div className={styles.logo}>
           <Link to="/" className={styles.logoName}>Verbio</Link>
@@ -117,7 +119,7 @@ const Login = () => {
         <div className={styles.google}>
           <img src={googleIcon} alt="Google" className={styles.googleIcon} />
           <div className={styles.googleText} onClick={signInWithGoogle} disabled={loading}>
-            {loading ? 'Signing you up...': "Continue with Google"}
+            {loading ? 'Signing you in...': "Continue with Google"}
           </div>
         </div>
         {error && (
