@@ -12,6 +12,7 @@ import Profile from "./components/Profile/Profile"
 import VerifyEmail from "./components/VerifyEmail/VerifyEmail"
 import ResetPassword from "./components/ResetPassword/ResetPassword"
 import EditProfile from "./components/EditProfile/EditProfile"
+import WriteBlog from "./components/WriteBlog/WriteBlog"
 
 
 const router = createBrowserRouter([
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
   {
     path: "/edit-profile",
     element: <EditProfile />,
+  },
+  {
+    path: "/write-story",
+    element: <WriteBlog />,
   },
 ])
 

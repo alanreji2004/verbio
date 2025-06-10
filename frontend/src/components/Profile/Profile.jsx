@@ -50,7 +50,11 @@ const Profile = () => {
   };
 
   const handleEdit = () =>{
-    navigate('/edit-profile')
+    navigate('/edit-profile');
+  }
+
+  const handleWrite = () =>{
+    navigate('/write-story');
   }
 
   return (
@@ -86,7 +90,7 @@ const Profile = () => {
           </div>
         </div>
         <div className={styles.buttonDiv}>
-          <button className={styles.btn}>Write</button>
+          <button className={styles.btn} onClick={handleWrite}>Write</button>
           <button className={styles.btn} onClick={handleEdit}>Edit Profile</button>
         </div>
       </div>
