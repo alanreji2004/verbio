@@ -117,6 +117,7 @@ const ViewBlog = () => {
             window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(fullText);
             utterance.lang = 'en-US';
+            utterance.rate = 1;
 
             utterance.onend = () =>{
                 setIsReading(false);
@@ -125,8 +126,10 @@ const ViewBlog = () => {
             };
 
             utterance.onerror = (err) =>{
-                console.log('TTS error:',err);
-                toast.error("error while reading");
+                if (isPageUnloading || err.error === 'interrupted') {
+                    return;
+                }
+                toast.error("Error while reading");
                 setIsReading(false);
                 setIsPaused(false);
             };
