@@ -6,6 +6,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db, app } from '../../firebase';
 import person from '../../assets/person.png'
 import publish from '../../assets/publish.png'
+import axios from 'axios';
 
 
 const WriteBlog = () => {
@@ -31,7 +32,6 @@ const WriteBlog = () => {
         const unsubscribe = onAuthStateChanged(auth,async(currentUser)=>{
             if(currentUser){
                 setUser(currentUser);
-                const idToken = await currentUser.getIdToken();
                 const userDocRef = doc(db,'users',currentUser.uid);
                 const userDoc = await getDoc(userDocRef);
                 if(userDoc.exists()){
@@ -49,6 +49,43 @@ const WriteBlog = () => {
         return () => unsubscribe();
     },[auth,navigate]);
 
+  const handlePublish = async () =>{
+    if(!titleText.trim() || !bodyText.trim() ||loading){
+      return;
+    }
+    setLoading(true);
+    try{
+      const idToken = await user.getIdToken();
+
+      const res = await axios.post(
+        'https://verbio.onrender.com/blogs',
+        {
+          title: titleText,
+          content: bodyText,
+        },
+        {
+          headers:{
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${idToken}`,
+          },
+        }
+      );
+      if(res.status === 201){
+        alert('Blog published');
+            setTitleText('');
+            setBodyText('');
+            setIsDirty(false);
+            document.querySelector(`.${styles.titleContent}`).innerText = '';
+            document.querySelector(`.${styles.bodyContent}`).innerText = '';
+      }
+    }catch(error){
+      console.error('Error publishing blog:');
+      alert('Failed to publish blog. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className={styles.mainDiv}>
     {loading && <div className={styles.spinner}></div>}
@@ -63,7 +100,9 @@ const WriteBlog = () => {
           </div>
         </div>
         </nav>
-        <div className={`${styles.publishDiv} ${!(titleText.trim() || bodyText.trim()) ? styles.disabledPublish : ''}`}>
+        <div className={`${styles.publishDiv} ${!(titleText.trim() || bodyText.trim()) ? styles.disabledPublish : ''}`}
+          onClick={handlePublish}
+        >
             <div className={styles.publishIconDiv}>
                 <img src={publish} alt="publish" className={styles.publishIcon}/>
             </div>

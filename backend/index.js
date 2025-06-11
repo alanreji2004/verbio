@@ -10,6 +10,22 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
+const allowedOrigins = ['http://localhost:5173', 'https://verbio.vercel.app'];
+
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.post('/blogs',verifyToken,async (req,res) => {
     const{title,content} = req.body;
 
