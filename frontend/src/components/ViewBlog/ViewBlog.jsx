@@ -2,7 +2,7 @@ import {React,useState,useEffect,useRef} from 'react'
 import styles from './ViewBlog.module.css'
 import { Link, useNavigate,useParams } from "react-router-dom"
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db, app } from '../../firebase';
 import person from '../../assets/person.png'
 import write from '../../assets/write.png'
@@ -11,6 +11,8 @@ import share from '../../assets/share.png'
 import read from '../../assets/read.png'
 import play from '../../assets/play.png'
 import pause from '../../assets/pause.png'
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
+
 
 const ViewBlog = () => {
     const navigate = useNavigate()
@@ -24,6 +26,8 @@ const ViewBlog = () => {
     const [isPaused,setIsPaused] = useState(false);
     const utteranceRef = useRef(null);
     const [speechOffset, setSpeechOffset] = useState(0);
+    const [likesCount,setLikesCount] = useState(0);
+    const [hasLiked,setHasLiked] = useState(false);
 
     const backendApi = import.meta.env.VITE_BACKEND_API;
     const {id: blogId} = useParams()
@@ -67,7 +71,6 @@ const ViewBlog = () => {
                     setLoading(false);
                     return;
                 }
-
                 if (!response.ok) throw new Error('Blog not found');
 
                 const data = await response.json();
@@ -175,6 +178,50 @@ const ViewBlog = () => {
             window.speechSynthesis.cancel();
         };
     }, []);
+    useEffect(()=>{
+        setLoading(true);
+            if (!blog || !user) return;
+            setHasLiked(blog.likedBy.includes(user.uid));
+            setLikesCount(blog.likes || 0);
+        setLoading(false);
+    },[blog,user])
+
+    const handleToggleLike = async() =>{
+        if(!user){
+            toast.error("You must be loggedin to like!");
+            return;
+        }
+        const blogRef = doc(db,'blogs',blogId);
+
+        try{
+            const blogSnap = await getDoc(blogRef);
+            const blogData = blogSnap.data();
+            const currentLikedBy = blogData.likedBy;
+            let updatedLikedBy;
+
+            if(hasLiked){
+                updatedLikedBy = currentLikedBy.filter(uid => uid !== user.uid);
+                await updateDoc(blogRef,{
+                    likedBy: updatedLikedBy,
+                    likes: updatedLikedBy.length,
+                });
+                setHasLiked(false);
+                setLikesCount(updatedLikedBy.length);
+            }else{
+                updatedLikedBy = [...currentLikedBy,user.uid];
+
+                await updateDoc(blogRef,{
+                    likedBy: updatedLikedBy,
+                    likes: updatedLikedBy.length,
+                });
+                setHasLiked(true);
+                setLikesCount(updatedLikedBy.length);
+            }
+        }catch(err){
+            console.error("error toggling like",err);
+            toast.error("Could not update like!")
+        }
+    };
 
   return (
     <div className={styles.mainDiv}>
@@ -243,6 +290,16 @@ const ViewBlog = () => {
                     )}
                 </div>
                 <span className={styles.tooltip}>Read Aloud</span>
+                </div>
+                <div className={styles.tooltipWrapper}>
+                    <div className={styles.likeButtonDiv}>
+                            {hasLiked?(
+                                <FaHeart className={styles.likedHeart} onClick={handleToggleLike}/>
+                            ):(
+                                <FaRegHeart className={styles.unlikedHeart} onClick={handleToggleLike}/>
+                            )}
+                        <span className={styles.likeCount}>{likesCount}</span>
+                    </div>
                 </div>
             </div>
             <div className={styles.content} dangerouslySetInnerHTML={{ __html: blog.content }}></div>

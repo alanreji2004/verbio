@@ -458,3 +458,18 @@ body {
   visibility: visible;
   opacity: 1;
 }
+
+.likedHeart{
+  color: #8a6c50;
+  cursor: pointer;
+}
+.unlikedHeart{
+  color: #8a6c50;
+  cursor: pointer;
+}
+.likeButtonDiv{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  justify-content: center;
+}

@@ -41,6 +41,7 @@ app.post('/blogs',verifyToken,async (req,res) => {
             authorName: req.user.name,
             createdAt: new Date(),
             likes: 0,
+            likedBy: [],
         }
 
         const docRef = await db.collection('blogs').add(blog);
