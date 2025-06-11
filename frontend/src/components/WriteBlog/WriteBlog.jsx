@@ -53,6 +53,7 @@ const WriteBlog = () => {
 
   const handlePublish = async () =>{
     if(!titleText.trim() || !bodyText.trim() ||loading){
+      toast.warning("Missing Title or Content")
       return;
     }
     setLoading(true);

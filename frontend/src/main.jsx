@@ -64,10 +64,11 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <>
     <RouterProvider router={router} />
-    <ToastContainer position="bottom-center" autoClose={2000}
+    <ToastContainer position="bottom-center" autoClose={3000}
     style={{ bottom: window.innerWidth < 768 ? '80px' : '10px',
     width:window.innerWidth <768?'300px':'500px',
-    marginLeft:window.innerWidth <768?'55px':'',
+    left: '50%',
+    transform: 'translateX(-50%)',
     }}  />
   </>
 )
