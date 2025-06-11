@@ -1,4 +1,4 @@
-import {React, useState, useEffect} from 'react'
+import {React, useState, useEffect, use} from 'react'
 import styles from './WriteBlog.module.css'
 import { Link, useNavigate } from "react-router-dom"
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
@@ -16,6 +16,9 @@ const WriteBlog = () => {
     const [photo,setPhoto] = useState(null);
     const [name,setName] = useState(null);
     const [loading,setLoading] = useState(false);
+    const [titleText,setTitleText] = useState('');
+    const [bodyText,setBodyText] = useState('');
+    const [isDirty,setIsDirty] = useState(false);
 
 
     const handleToProfile = () => {
@@ -28,6 +31,7 @@ const WriteBlog = () => {
         const unsubscribe = onAuthStateChanged(auth,async(currentUser)=>{
             if(currentUser){
                 setUser(currentUser);
+                const idToken = await currentUser.getIdToken();
                 const userDocRef = doc(db,'users',currentUser.uid);
                 const userDoc = await getDoc(userDocRef);
                 if(userDoc.exists()){
@@ -59,15 +63,39 @@ const WriteBlog = () => {
           </div>
         </div>
         </nav>
-        <div className={styles.publishDiv}>
+        <div className={`${styles.publishDiv} ${!(titleText.trim() || bodyText.trim()) ? styles.disabledPublish : ''}`}>
             <div className={styles.publishIconDiv}>
                 <img src={publish} alt="publish" className={styles.publishIcon}/>
             </div>
             <div className={styles.publishText}>Publish</div>
         </div>
         <div className={styles.content}>
-            <div className={styles.titleContent} contentEditable = "true" data-placeholder="Title" ></div>
-            <div className={styles.bodyContent} contentEditable = "true" data-placeholder = "Write your Blog..."></div>
+            <div 
+            className={styles.titleContent} 
+            contentEditable = "true" 
+            data-placeholder="Title"
+            onInput={(e) => {
+              const text = e.currentTarget.textContent.trim();
+              if(!text){
+                e.currentTarget.innerHTML = '';
+              }
+              setTitleText(text);
+              setIsDirty(true);
+            }} >
+            </div>
+            <div 
+            className={styles.bodyContent} 
+            contentEditable = "true" 
+            data-placeholder = "Write your Blog..."
+            onInput={(e) => {
+              const content = e.currentTarget.textContent.trim();
+              if(!content){
+                e.currentTarget.innerHTML = '';
+              }
+              setBodyText(content);
+              setIsDirty(true);
+              }}>
+            </div>
         </div>
     </div>
   )

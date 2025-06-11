@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { db } = require('./firebase');
-const verifyToken = require('./middlware/authMiddleware');
+const verifyToken = require('./middleware/authMiddleware');
 require('dotenv').config();
 
 const app = express();
@@ -31,7 +31,7 @@ app.post('/blogs',verifyToken,async (req,res) => {
     }
     catch(err){
         console.error('Error writing blog:', err);
-        res.status(500).json({ message: 'Failed to post blog' });
+        res.status(500).json({ message: 'Failed to post blog'});
     }
 });
 

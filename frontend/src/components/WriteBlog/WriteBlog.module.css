@@ -215,3 +215,9 @@ body {
         font-size: 1rem;
     }
 }
+
+.disabledPublish {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: default;
+}
