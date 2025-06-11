@@ -65,6 +65,9 @@ const ViewBlog = () => {
 
                 const data = await response.json();
 
+                if (data.createdAt && data.createdAt._seconds) {
+                data.createdDate = new Date(data.createdAt._seconds * 1000);
+                }
                 setBlog(data);
             }catch(err){
                 console.error('Error fetching blog');
@@ -124,9 +127,17 @@ const ViewBlog = () => {
                         <div className={styles.shareText}>Share</div>
                     </div>
                 </div>
-                <div className={styles.authorName}>{blog.authorName}</div>
+                <div className={styles.nameAndDate}>
+                    <div className={styles.authorName}>{blog.authorName}</div>
+                    <div className={styles.date}>
+                        {blog.createdDate && blog.createdDate.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                         })}
+                    </div>
+                </div>
             </div>
-            <div className={styles.date}></div>
             <div className={styles.content} dangerouslySetInnerHTML={{ __html: blog.content }}></div>
         </div>
       )}
