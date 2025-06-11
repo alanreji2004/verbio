@@ -335,7 +335,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin-bottom: 25px;
 }
 
 .heading{
@@ -356,6 +355,7 @@ body {
     font-size: 1.2rem;
     text-align: justify;
     text-indent: 5rem;
+    margin-top: 2rem;
 }
 @media screen and (max-width: 768px){
     .heading{
@@ -393,10 +393,8 @@ body {
     display: flex;
     gap: 5px;
     cursor: pointer;
-    width: 100px;
     align-items: center;
     height: 35px;
-    border-radius: 12px;
 }
 
 .signIn {
@@ -417,4 +415,8 @@ body {
 }
 .date{
     font-size: 0.8rem;
+}
+
+.button{
+    margin-top: 1rem;
 }

@@ -122,10 +122,6 @@ const ViewBlog = () => {
             <div className={styles.header}>
                 <div className={styles.headingLine}>
                     <div className={styles.heading}>{blog.title}</div>
-                    <div className={styles.share} onClick={handleShare}>
-                        <img src={share} alt="share" className={styles.shareIcon} />
-                        <div className={styles.shareText}>Share</div>
-                    </div>
                 </div>
                 <div className={styles.nameAndDate}>
                     <div className={styles.authorName}>{blog.authorName}</div>
@@ -136,6 +132,12 @@ const ViewBlog = () => {
                             day: 'numeric',
                          })}
                     </div>
+                </div>
+            </div>
+            <div className={styles.buttons}>
+                <div className={styles.share} onClick={handleShare}>
+                    <img src={share} alt="share" className={styles.shareIcon} />
+                    <div className={styles.shareText}>Share</div>
                 </div>
             </div>
             <div className={styles.content} dangerouslySetInnerHTML={{ __html: blog.content }}></div>
