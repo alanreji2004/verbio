@@ -375,3 +375,24 @@ body {
         font-size: 1.2rem;
     }
 }
+.headingLine{
+    display: flex;
+    align-items: center;
+}
+
+.shareIcon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  margin-left: 10px; 
+  cursor: pointer; 
+}
+.share{
+    display: flex;
+    gap: 5px;
+    cursor: pointer;
+    width: 100px;
+    align-items: center;
+    height: 35px;
+    border-radius: 12px;
+}

@@ -80,6 +80,7 @@ const WriteBlog = () => {
         setIsDirty(false);
         document.querySelector(`.${styles.titleContent}`).innerText = '';
         document.querySelector(`.${styles.bodyContent}`).innerText = '';
+        navigate(`/blog/${res.data.docId}`);
       }
     }catch(error){
       console.error('Error publishing blog:');

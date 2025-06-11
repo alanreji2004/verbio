@@ -44,7 +44,7 @@ app.post('/blogs',verifyToken,async (req,res) => {
         }
 
         const docRef = await db.collection('blogs').add(blog);
-        res.status(201).json({message: 'Blog Posted'})
+        res.status(201).json({docId: docRef.id})
     }
     catch(err){
         console.error('Error writing blog:', err);

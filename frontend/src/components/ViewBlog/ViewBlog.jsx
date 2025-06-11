@@ -7,6 +7,7 @@ import { db, app } from '../../firebase';
 import person from '../../assets/person.png'
 import write from '../../assets/write.png'
 import { toast } from 'react-toastify';
+import share from '../../assets/share.png'
 
 const ViewBlog = () => {
     const navigate = useNavigate()
@@ -76,6 +77,17 @@ const ViewBlog = () => {
         if (blogId) fetchBlog();
     },[blogId]);
 
+    const handleShare = () =>{
+        const blogLink = window.location.href;
+        navigator.clipboard.writeText(blogLink)
+            .then(() =>{
+                toast.success("Link copied to clipboard");
+            })
+            .catch(err => {
+                toast.error("Failed to copy")
+            });
+    };
+
   return (
     <div className={styles.mainDiv}>
       {loading && <div className={styles.spinner}></div>}
@@ -96,7 +108,13 @@ const ViewBlog = () => {
       {!loading && blog && (
         <div className={styles.contentDiv}>
             <div className={styles.header}>
-                <div className={styles.heading}>{blog.title}</div>
+                <div className={styles.headingLine}>
+                    <div className={styles.heading}>{blog.title}</div>
+                    <div className={styles.share} onClick={handleShare}>
+                        <img src={share} alt="share" className={styles.shareIcon} />
+                        <div className={styles.shareText}>Share</div>
+                    </div>
+                </div>
                 <div className={styles.authorName}>{blog.authorName}</div>
             </div>
             <div className={styles.date}></div>
