@@ -1,20 +1,24 @@
 import {React,useState,useEffect} from 'react'
 import styles from './ViewBlog.module.css'
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate,useParams } from "react-router-dom"
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { db, app } from '../../firebase';
 import person from '../../assets/person.png'
 import write from '../../assets/write.png'
+import { toast } from 'react-toastify';
 
 const ViewBlog = () => {
- const navigate = useNavigate()
+    const navigate = useNavigate()
     const auth = getAuth(app);
     const [user,setUser] = useState(null);
     const [photo,setPhoto] = useState(null);
     const [name,setName] = useState(null);
     const [loading,setLoading] = useState(false);
+    const [blog,setBlog] = useState(null);
 
+    const backendApi = import.meta.env.VITE_BACKEND_API;
+    const {id: blogId} = useParams()
 
     const handleToProfile = () => {
         navigate('/profile');
@@ -38,13 +42,39 @@ const ViewBlog = () => {
                     }
                     setName(data.name);
                 }
-              }else{
+            }else{
                 navigate('/login');
-              }
+            }
             setLoading(false);
         });
         return () => unsubscribe();
     },[auth,navigate]);
+
+    useEffect(()=>{
+        const fetchBlog = async () =>{
+            setLoading(true);
+            try{
+                const response = await fetch(`${backendApi}/getblog/${blogId}`);
+
+                if (response.status === 404) {
+                    toast.error('Blog not Found');
+                    setLoading(false);
+                    return;
+                }
+
+                if (!response.ok) throw new Error('Blog not found');
+
+                const data = await response.json();
+
+                setBlog(data);
+            }catch(err){
+                console.error('Error fetching blog');
+                toast.error('Unable to load blog');
+            }
+            setLoading(false);
+        }
+        if (blogId) fetchBlog();
+    },[blogId]);
 
   return (
     <div className={styles.mainDiv}>
@@ -63,6 +93,16 @@ const ViewBlog = () => {
           </div>
         </div>
       </nav>
+      {!loading && blog && (
+        <div className={styles.contentDiv}>
+            <div className={styles.header}>
+                <div className={styles.heading}>{blog.title}</div>
+                <div className={styles.authorName}>{blog.authorName}</div>
+            </div>
+            <div className={styles.date}></div>
+            <div className={styles.content} dangerouslySetInnerHTML={{ __html: blog.content }}></div>
+        </div>
+      )}
       <div className={styles.notes}>
         <div className={styles.line1}></div>
         <div className={styles.line2}></div>

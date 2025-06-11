@@ -38,6 +38,7 @@ app.post('/blogs',verifyToken,async (req,res) => {
             title: title,
             content: content,
             authorId: req.user.uid,
+            authorName: req.user.name,
             createdAt: new Date(),
             likes: 0,
         }
@@ -48,6 +49,23 @@ app.post('/blogs',verifyToken,async (req,res) => {
     catch(err){
         console.error('Error writing blog:', err);
         res.status(500).json({ message: 'Failed to post blog'});
+    }
+});
+
+app.get('/getblog/:id',async (req,res)=>{
+    const blogId = req.params.id;
+    try{
+        const docRef = db.collection('blogs').doc(blogId);
+        const docSnap = await docRef.get();
+
+        if(!docSnap.exists){
+            return res.status(404).json({message : 'Blog not Found'});
+        }
+
+        res.status(200).json(docSnap.data());
+    }catch(error){
+        console.error('Error fetching blog:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 });
 

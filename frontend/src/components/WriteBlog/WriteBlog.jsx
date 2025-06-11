@@ -130,7 +130,7 @@ const WriteBlog = () => {
             contentEditable = "true" 
             data-placeholder = "Write your Blog..."
             onInput={(e) => {
-              const content = e.currentTarget.textContent.trim();
+              const content = e.currentTarget.innerHTML.trim();
               if(!content){
                 e.currentTarget.innerHTML = '';
               }

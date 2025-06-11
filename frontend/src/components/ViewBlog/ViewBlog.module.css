@@ -153,7 +153,7 @@ body {
 }
 
 .notes{
-    opacity: 0.5;
+    opacity: 0.4;
     z-index: 0;
     overflow: visible;
     position:fixed;
@@ -219,7 +219,7 @@ body {
 }
 
 .rectangle{
-    opacity: 0.5;
+    opacity: 0.4;
     z-index: 0;
     overflow: visible;
     position: fixed;
@@ -268,7 +268,7 @@ body {
 }
 
 .square{
-    opacity: 0.5;
+    opacity: 0.4;
     z-index: 0;
     overflow: visible;
     opacity: 0.5;
@@ -298,7 +298,7 @@ body {
 } 
 
 .oval{
-    opacity: 0.5;
+    opacity: 0.4;
     z-index: 0;
     overflow: visible;
     position: absolute;
@@ -321,5 +321,57 @@ body {
 @media screen and (max-width: 480px){
     .oval{
         top: 25.5rem;
+    }
+}
+.contentDiv{
+    z-index: 2;
+    width: 100%;
+    max-width: 1000px;
+    padding: 0 1rem;
+    margin-top: 5rem;
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 25px;
+}
+
+.heading{
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+    outline: none;
+    border: none;
+    width: 800px;
+}
+
+.authorName{
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.content{
+    font-size: 1.2rem;
+    text-align: justify;
+    text-indent: 5rem;
+}
+@media screen and (max-width: 768px){
+    .heading{
+        font-size: 2.4rem;
+        width: 400px;
+    }
+    .content{
+        font-size: 1.3rem;
+    }
+}
+@media screen and (max-width: 480px){
+    .heading{
+        font-size: 1.6rem;
+        width: 280px;
+    }
+    .content{
+        font-size: 1.2rem;
     }
 }
