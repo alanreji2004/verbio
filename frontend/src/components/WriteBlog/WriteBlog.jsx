@@ -56,9 +56,10 @@ const WriteBlog = () => {
     setLoading(true);
     try{
       const idToken = await user.getIdToken();
+      const backendApi = import.meta.env.VITE_BACKEND_API;
 
       const res = await axios.post(
-        'https://verbio.onrender.com/blogs',
+        `${backendApi}/blogs`,
         {
           title: titleText,
           content: bodyText,
