@@ -114,7 +114,7 @@ const ViewBlog = () => {
     </div>
     </nav>
 
-      {!loading && blog && (
+      {!loading && blog && blog.title && blog.content &&(
         <div className={styles.contentDiv}>
             <div className={styles.header}>
                 <div className={styles.headingLine}>
