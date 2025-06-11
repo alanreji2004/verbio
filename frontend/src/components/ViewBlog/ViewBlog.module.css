@@ -396,3 +396,14 @@ body {
     height: 35px;
     border-radius: 12px;
 }
+
+.signIn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 550;
+  color: #080926;
+  cursor: pointer;
+  display: inline block;
+  padding: 0.6rem 1.2rem;
+}

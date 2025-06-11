@@ -43,8 +43,6 @@ const ViewBlog = () => {
                     }
                     setName(data.name);
                 }
-            }else{
-                navigate('/login');
             }
             setLoading(false);
         });
@@ -88,23 +86,34 @@ const ViewBlog = () => {
             });
     };
 
+    const handleLogo = () =>{
+        navigate('/home');
+    }
+
   return (
     <div className={styles.mainDiv}>
       {loading && <div className={styles.spinner}></div>}
-      <nav className={styles.navbar}>
-        <div className={styles.logo}>Verbio</div>
-          <div className={styles.navButtons}>
-            <div className={styles.writeIconDiv}>
-              <img src={write} alt="write" className={styles.writeIcon} onClick={handleWrite}/>
+        <nav className={styles.navbar}>
+            <div className={styles.logo} onClick={handleLogo}>Verbio</div>
+            <div className={styles.navButtons}>
+                {user ? (
+            <>
+                <div className={styles.writeIconDiv}>
+                <img src={write} alt="write" className={styles.writeIcon} onClick={handleWrite} />
             </div>
             <div className={styles.profile} onClick={handleToProfile}>
-              <div className={styles.profileIconDiv}>
-                  <img src={person} alt="profile" className={styles.profileIcon} />
-              </div>
+            <div className={styles.profileIconDiv}>
+                <img src={person} alt="profile" className={styles.profileIcon} />
+            </div>
             <div className={styles.userName}>{name}</div>
-          </div>
-        </div>
-      </nav>
+            </div>
+        </>
+        ) : (
+        <Link to="/login" className={styles.signIn}>Sign in</Link>
+        )}
+    </div>
+    </nav>
+
       {!loading && blog && (
         <div className={styles.contentDiv}>
             <div className={styles.header}>
