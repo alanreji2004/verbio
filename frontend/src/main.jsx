@@ -15,6 +15,7 @@ import VerifyEmail from "./components/VerifyEmail/VerifyEmail"
 import ResetPassword from "./components/ResetPassword/ResetPassword"
 import EditProfile from "./components/EditProfile/EditProfile"
 import WriteBlog from "./components/WriteBlog/WriteBlog"
+import ViewBlog from "./components/ViewBlog/ViewBlog"
 
 
 const router = createBrowserRouter([
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
   {
     path: "/write-story",
     element: <WriteBlog />,
+  },
+  {
+    path: "/blog/:id",
+    element: <ViewBlog />,
   },
 ])
 
