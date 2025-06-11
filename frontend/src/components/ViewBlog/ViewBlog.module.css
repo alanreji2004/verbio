@@ -382,7 +382,7 @@ body {
     align-items: center;
 }
 
-.shareIcon {
+.shareIcon{
   width: 24px;
   height: 24px;
   object-fit: contain;
@@ -417,6 +417,15 @@ body {
     font-size: 0.8rem;
 }
 
-.button{
+.buttons{
     margin-top: 1rem;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.readButton,.playButton,.pauseButton{
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
 }
