@@ -123,6 +123,7 @@ const ViewBlog = () => {
 
         utterance.onerror = () =>{
             console.log('TTS error:',err);
+            toast.error("error while reading");
             setIsReading(false);
             setIsPaused(false);
         }
@@ -143,7 +144,7 @@ const ViewBlog = () => {
             setIsPaused(true);
         }
     };
-    
+
     useEffect(() => {
         const handleBeforeUnload = () => {
             window.speechSynthesis.cancel();
@@ -200,11 +201,15 @@ const ViewBlog = () => {
                 </div>
             </div>
             <div className={styles.buttons}>
-                <div className={styles.share} onClick={handleShare}>
-                    <img src={share} alt="share" className={styles.shareIcon} />
-                    <div className={styles.shareText}>Share</div>
+                <div className={styles.tooltipWrapper}>
+                    <div className={styles.share} onClick={handleShare}>
+                        <img src={share} alt="share" className={styles.shareIcon} />
+                        <div className={styles.shareText}>Share</div>
+                    </div>
+                    <span className={styles.tooltip}>Copy blog link</span>
                 </div>
-                <div className={styles.speechControls}>
+                <div className={styles.tooltipWrapper}>
+                                    <div className={styles.speechControls}>
                     {!isReading ? (
                         <div className={styles.readButtonDiv}>
                             <img src={read} alt="read" className={styles.readButton}
@@ -219,6 +224,8 @@ const ViewBlog = () => {
                             )}
                         </div>
                     )}
+                </div>
+                <span className={styles.tooltip}>Read Aloud</span>
                 </div>
             </div>
             <div className={styles.content} dangerouslySetInnerHTML={{ __html: blog.content }}></div>
