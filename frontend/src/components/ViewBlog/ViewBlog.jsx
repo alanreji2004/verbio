@@ -23,6 +23,7 @@ const ViewBlog = () => {
     const [isReading,setIsReading] = useState(false);
     const [isPaused,setIsPaused] = useState(false);
     const utteranceRef = useRef(null);
+    const [speechOffset, setSpeechOffset] = useState(0);
 
     const backendApi = import.meta.env.VITE_BACKEND_API;
     const {id: blogId} = useParams()
@@ -108,40 +109,54 @@ const ViewBlog = () => {
     const handleStartReading = () => {
         if(!blog || !blog.content) return;
 
-        window.speechSynthesis.cancel();
+        if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) return;
 
-        const utterance = new SpeechSynthesisUtterance(
-            stripHtmlTags(blog.title + '. ' + blog.content)
-        );
+        const fullText = stripHtmlTags(blog.title + '. ' +blog.content);
+        
+        if(!isReading || !utteranceRef.current){
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(fullText);
+            utterance.lang = 'en-US';
 
-        utterance.lang = 'en-US';
+            utterance.onend = () =>{
+                setIsReading(false);
+                setIsPaused(false);
+                setSpeechOffset(0);
+            };
 
-        utterance.onend = () =>{
-            setIsReading(false);
+            utterance.onerror = (err) =>{
+                console.log('TTS error:',err);
+                toast.error("error while reading");
+                setIsReading(false);
+                setIsPaused(false);
+            };
+
+            utteranceRef.current = utterance;
+            window.speechSynthesis.speak(utterance);
+            setIsReading(true);
             setIsPaused(false);
-        };
-
-        utterance.onerror = () =>{
-            console.log('TTS error:',err);
-            toast.error("error while reading");
-            setIsReading(false);
+        }else if(window.speechSynthesis.paused){
+            window.speechSynthesis.resume();
             setIsPaused(false);
         }
-
-        utteranceRef.current = utterance;
-        window.speechSynthesis.speak(utterance);
-        setIsReading(true);
-        setIsPaused(false);
     };
 
     const handlePauseReading = () =>{
-        if(!window.speechSynthesis.speaking) return;
-        if(window.speechSynthesis.paused){
-            window.speechSynthesis.resume();
-            setIsPaused(false);
-        }else{
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        
+        if (isMobile) {
+            window.speechSynthesis.cancel();
+            setIsPaused(true);
+            setIsReading(false);
+        } else {
+            if (!window.speechSynthesis.speaking) return;
+            if (window.speechSynthesis.paused) {
+                window.speechSynthesis.resume();
+                setIsPaused(false);
+            } else {
             window.speechSynthesis.pause();
             setIsPaused(true);
+            }
         }
     };
 
@@ -157,7 +172,6 @@ const ViewBlog = () => {
             window.speechSynthesis.cancel();
         };
     }, []);
-
 
   return (
     <div className={styles.mainDiv}>
@@ -218,7 +232,7 @@ const ViewBlog = () => {
                     ):(
                         <div className={styles.pauseOrPlay}>
                             {isPaused?(
-                                <img src={play} alt="play" className={styles.playButton} onClick={handlePauseReading} />
+                                <img src={play} alt="play" className={styles.playButton} onClick={handleStartReading} />
                             ):(
                                 <img src={pause} alt="pause" className={styles.pauseButton} onClick={handlePauseReading} />
                             )}
