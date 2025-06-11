@@ -179,16 +179,12 @@ const ViewBlog = () => {
         };
     }, []);
     useEffect(()=>{
-        setLoading(true);
-        if(blog){
+        if (blog && user && Array.isArray(blog.likedBy)) {
             setLikesCount(blog.likes || 0);
-        }
-        if(user){
             setHasLiked(blog.likedBy.includes(user.uid));
-        }else{
+        } else {
             setHasLiked(false);
         }
-        setLoading(false);
     },[blog,user])
 
     const handleToggleLike = async() =>{
@@ -200,8 +196,12 @@ const ViewBlog = () => {
 
         try{
             const blogSnap = await getDoc(blogRef);
+            if (!blogSnap.exists()) {
+                toast.error("Blog not found!");
+                return;
+            }
             const blogData = blogSnap.data();
-            const currentLikedBy = blogData.likedBy;
+            const currentLikedBy = Array.isArray(blogData.likedBy) ? blogData.likedBy : [];
             let updatedLikedBy;
 
             if(hasLiked){
