@@ -364,6 +364,7 @@ body {
     }
     .content{
         font-size: 1.3rem;
+        text-indent: 2rem;
     }
 }
 @media screen and (max-width: 480px){
@@ -373,6 +374,7 @@ body {
     }
     .content{
         font-size: 1.2rem;
+        text-indent: 2rem;
     }
 }
 .headingLine{
