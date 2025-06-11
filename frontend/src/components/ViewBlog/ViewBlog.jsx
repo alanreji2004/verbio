@@ -180,9 +180,14 @@ const ViewBlog = () => {
     }, []);
     useEffect(()=>{
         setLoading(true);
-            if (!blog || !user) return;
-            setHasLiked(blog.likedBy.includes(user.uid));
+        if(blog){
             setLikesCount(blog.likes || 0);
+        }
+        if(user){
+            setHasLiked(blog.likedBy.includes(user.uid));
+        }else{
+            setHasLiked(false);
+        }
         setLoading(false);
     },[blog,user])
 
