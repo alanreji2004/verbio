@@ -7,6 +7,8 @@ import { db, app } from '../../firebase';
 import person from '../../assets/person.png'
 import publish from '../../assets/publish.png'
 import axios from 'axios';
+import { toast } from 'react-toastify';
+
 
 
 const WriteBlog = () => {
@@ -72,16 +74,16 @@ const WriteBlog = () => {
         }
       );
       if(res.status === 201){
-        alert('Blog published');
-            setTitleText('');
-            setBodyText('');
-            setIsDirty(false);
-            document.querySelector(`.${styles.titleContent}`).innerText = '';
-            document.querySelector(`.${styles.bodyContent}`).innerText = '';
+        toast.success('Blog published');
+        setTitleText('');
+        setBodyText('');
+        setIsDirty(false);
+        document.querySelector(`.${styles.titleContent}`).innerText = '';
+        document.querySelector(`.${styles.bodyContent}`).innerText = '';
       }
     }catch(error){
       console.error('Error publishing blog:');
-      alert('Failed to publish blog. Please try again.');
+      toast.error('Failed to publish blog. Please try again.');
     } finally {
       setLoading(false);
     }

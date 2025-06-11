@@ -4,6 +4,8 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom"
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Landing from "./components/Landing/Landing"
 import Login from "./components/Login/Login"
 import Signup from "./components/Signup/Signup"
@@ -55,5 +57,8 @@ const router = createBrowserRouter([
 ])
 
 createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router} />
+  <>
+    <RouterProvider router={router} />
+    <ToastContainer position="bottom-center" autoClose={3000} />
+  </>
 )
