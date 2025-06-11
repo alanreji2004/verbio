@@ -1,6 +1,6 @@
 import {React,useState,useEffect,useRef} from 'react'
 import styles from './ViewBlog.module.css'
-import { Link, useNavigate,useParams } from "react-router-dom"
+import { Link, useNavigate,useParams, useLocation } from "react-router-dom"
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db, app } from '../../firebase';
@@ -15,7 +15,8 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 
 const ViewBlog = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const location = useLocation();
     const auth = getAuth(app);
     const [user,setUser] = useState(null);
     const [photo,setPhoto] = useState(null);
@@ -179,11 +180,13 @@ const ViewBlog = () => {
         };
     }, []);
     useEffect(()=>{
-        if (blog && user && Array.isArray(blog.likedBy)) {
+        if (blog && Array.isArray(blog.likedBy)) {
             setLikesCount(blog.likes || 0);
-            setHasLiked(blog.likedBy.includes(user.uid));
-        } else {
-            setHasLiked(false);
+            if(user){
+                setHasLiked(blog.likedBy.includes(user.uid));
+                } else {
+                setHasLiked(false);
+            }
         }
     },[blog,user])
 
@@ -247,7 +250,7 @@ const ViewBlog = () => {
             </div>
         </>
         ) : (
-        <Link to="/login" className={styles.signIn}>Sign in</Link>
+        <Link to="/login" state={{ from: location.pathname}} className={styles.signIn}>Sign in</Link>
         )}
     </div>
     </nav>

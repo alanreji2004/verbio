@@ -9,7 +9,7 @@ const VerifyEmail = () => {
   const auth = getAuth();
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { uid, name, email } = state || {};
+  const { uid, name, email} = state || {};
   const [user, setUser] = useState(null);
   const [emailVerified, setEmailVerified] = useState(false);
   const [resending, setResending] = useState(false);
@@ -39,8 +39,9 @@ const VerifyEmail = () => {
             lastLogin: new Date()
           });
         }
-
-        navigate('/profile');
+        const redirectPath = localStorage.getItem("redirectAfterVerify") || '/profile';
+        localStorage.removeItem("redirectAfterVerify");
+        navigate(redirectPath, { replace: true });
       }
     }, 5000);
 

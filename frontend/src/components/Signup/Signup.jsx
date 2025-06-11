@@ -1,5 +1,5 @@
 import {React,useState} from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import styles from './Signup.module.css'
 import googleIcon from '../../assets/googleIcon.webp'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
@@ -9,7 +9,8 @@ import { db, app, storage } from '../../firebase';
 
 
 const Signup = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
@@ -20,8 +21,10 @@ const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const from = location.state?.from || '/home';
+    
     const handleLoginClick = () => {
-    navigate('/login')
+    navigate('/login',{ state: { from } })
     }
 
   const signUpWithGoogle = async () => {
@@ -45,7 +48,7 @@ const Signup = () => {
           lastLogin: new Date()
         }, { merge: true })
       }
-      navigate('/profile')
+      navigate(from, { replace: true })
     } catch (error) {
       setError("Sign in Failed, Try again..")
     } finally {

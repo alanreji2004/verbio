@@ -1,5 +1,5 @@
 import {React,useState} from 'react'
-import { Link,useNavigate } from 'react-router-dom'
+import { Link,useNavigate,useLocation } from 'react-router-dom'
 import styles from './Login.module.css'
 import googleIcon from '../../assets/googleIcon.webp'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
@@ -9,9 +9,6 @@ import { db, app, storage } from '../../firebase';
 
 const Login = () => {
     const navigate = useNavigate()
-    const handleSignupClick = () => {
-        navigate('/signup')
-    }
 
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
@@ -20,6 +17,13 @@ const Login = () => {
     const [emailLoading,setEmailLoading] = useState(false);
     const [email, setEmail] = useState('');
     const [password,setPassword] = useState('');
+
+    const location = useLocation();
+    const from = location.state?.from || '/home';
+
+    const handleSignupClick = () => {
+      navigate('/signup', { state: {from}})
+    }
 
     const signInWithGoogle = async () => {
     try {
@@ -42,7 +46,7 @@ const Login = () => {
           lastLogin: new Date()
         }, { merge: true })
       }
-      navigate('/profile')
+      navigate(from,{replace:true})
     } catch (error) {
       setError("Sign in Failed, Try again..")
     } finally {
@@ -73,7 +77,7 @@ const Login = () => {
             }, { merge: true });
 
 
-            navigate('/profile');
+            navigate(from,{replace:true});
         }
         catch(error){
             console.error(error.code, error.message);
