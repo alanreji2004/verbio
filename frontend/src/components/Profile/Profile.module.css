@@ -80,8 +80,10 @@ body {
   width: 300px;
   position: sticky;
   top: 6rem;
-  height: fit-content;
+  height: 500px;
   flex-shrink: 0;
+  background-color: #fff2e6;
+  border-radius: 10px;
 }
 
 .profilePic {
@@ -92,6 +94,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top:4rem ;
 }
 
 .profileIcon {
@@ -162,8 +165,8 @@ body {
 }
 
 .verticalLine {
-  width: 1px;
-  background-color: #080926;
+  width: 2px;
+  background-color: #676768;
   margin: 0 2rem;
 }
 
@@ -174,7 +177,7 @@ body {
   padding-right: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .spinner {
@@ -191,18 +194,25 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.eachBlog{
+  height: 150px;
+  width: 600px;
+  flex-shrink: 0;
+  padding: 1rem 1.5rem 0 20px;
+  background-color: #fff2e6;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
 @keyframes spin {
   to {
     transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 
-.eachBlog{
-  height: 100px;
-  width: 600px;
-  border: 1px dotted black;
-  flex-shrink: 0;
-  }
+
 
 
 @media screen and (max-width: 768px) {
@@ -243,6 +253,25 @@ body {
     height: auto;
     overflow: visible;
   }
+  .eachBlog{
+    height: 180px;
+    width: 600px;
+  }
+    .blogTitle{
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.date{
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: grey;
+}
+
+.blogContent{
+  font-size: 0.9rem;
+  font-weight: 350 ;
+}
 }
 
 
@@ -270,10 +299,59 @@ body {
   .blogSection{
     height: auto;
     overflow: visible;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   .eachBlog{
-    height: 100px;
-    width: 320px;
-    border: 1px solid black;
+    height: 220px;
+    width: 371px;
   }
+  .blogTitle{
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+.date{
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: grey;
+}
+
+.blogContent{
+  font-size: 0.9rem;
+  font-weight: 350 ;
+}
+}
+.likeSection{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.secondLine{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.likedHeart{
+  color: #8a6c50;
+  cursor: pointer;
+}
+
+.blogTitle{
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.date{
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: grey;
+}
+
+.blogContent{
+  font-size: 1.1rem;
+  font-weight: 350 ;
 }

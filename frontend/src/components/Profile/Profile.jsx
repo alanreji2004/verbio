@@ -54,7 +54,16 @@ const Profile = () => {
           });
 
           const data = await res.json();
-          setBlogs(data);
+          const formattedBlogs = data.map(blog => {
+            if (blog.createdAt && blog.createdAt._seconds) {
+                 blog.createdDate = new Date(blog.createdAt._seconds * 1000);
+            } else {
+              blog.createdDate = null;
+            }
+            return blog;
+          });
+
+          setBlogs(formattedBlogs);
           }catch (err) {
             console.error('Error fetching blogs:', err);
           }finally {
@@ -139,19 +148,19 @@ const Profile = () => {
                     <div className={styles.secondLine}>
                       <div className={styles.dateSection}>
                           <div className={styles.date}>
-                              {blog.createdDate && new Date(blog.createdDate).toLocaleDateString('en-US', {
-                                  year: 'numeric',
+                              {blog.createdDate && blog.createdDate.toLocaleDateString('en-US', {
+                                  year  : 'numeric',
                                   month: 'long',
                                   day: 'numeric',
                                })}
                           </div>                      
                       </div>
                       <div className={styles.likeSection}>
-                        <FaHeart />
+                        <FaHeart className={styles.likedHeart} />
                         <div className={styles.likeCount}>{blog.likes}</div>
                       </div>
                     </div>
-                    <div className={styles.blogContent}>{stripHtml(blog.content)?.split(' ').slice(0, 20).join(' ')}...</div>
+                    <div className={styles.blogContent}>{stripHtml(blog.content)?.split(' ').slice(0, 18).join(' ')}...</div>
                   </div>
                 ))
               ):(
