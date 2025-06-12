@@ -12,6 +12,7 @@ import read from '../../assets/read.png'
 import play from '../../assets/play.png'
 import pause from '../../assets/pause.png'
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import DOMPurify from 'dompurify';
 
 
 const ViewBlog = () => {
@@ -315,7 +316,7 @@ const ViewBlog = () => {
                     </div>
                 </div>
             </div>
-            <div className={styles.content} dangerouslySetInnerHTML={{ __html: blog.content }}></div>
+            <div className={styles.content} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content) }}></div>
         </div>
       )}
       <div className={styles.notes}>
