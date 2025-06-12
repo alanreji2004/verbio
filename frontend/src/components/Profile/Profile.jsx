@@ -11,30 +11,24 @@ const Profile = () => {
   const [user, setUser] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
   const [name, setName] = useState(null);
-  const [oneLiner,setOneLiner] = useState(null);
-  const [bio,setBio] = useState(null);
+  const [oneLiner, setOneLiner] = useState(null);
+  const [bio, setBio] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      const token = await auth.currentUser.getIdToken()
       if (currentUser) {
         setUser(currentUser);
         const userDocRef = doc(db, 'users', currentUser.uid);
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
           const data = userDoc.data();
-          if (data.photoURL) {
-            setProfileImage(data.photoURL);
-          }
+          if (data.photoURL) setProfileImage(data.photoURL);
           setName(data.name);
-          if(data.oneLiner){
-            setOneLiner(data.oneLiner);
-          }
-          if(data.bio){
-            setBio(data.bio);
-          }
-
+          if (data.oneLiner) setOneLiner(data.oneLiner);
+          if (data.bio) setBio(data.bio);
         }
       } else {
         navigate('/login');
@@ -49,17 +43,17 @@ const Profile = () => {
     navigate('/');
   };
 
-  const handleEdit = () =>{
+  const handleEdit = () => {
     navigate('/edit-profile');
-  }
+  };
 
-  const handleWrite = () =>{
+  const handleWrite = () => {
     navigate('/write-story');
-  }
+  };
 
   return (
-    <div className={styles.mainDiv}>
-       {loading && <div className={styles.spinner}></div>}
+    <div className={styles.wrapper}>
+      {loading && <div className={styles.spinner}></div>}
       <nav className={styles.navbar}>
         <div className={styles.logo}>
           <Link to="/home" className={styles.logoName}>Verbio</Link>
@@ -68,30 +62,38 @@ const Profile = () => {
           <button className={styles.btn} onClick={handleSignOut}>Signout</button>
         </div>
       </nav>
-      <div className={styles.profile}>
-        <div className={styles.profilePic}>
-          {profileImage ? (
-            <img src={profileImage} alt="Profile" className={styles.actualPic} />
-          ) : (
-            <div className={styles.profileIcon}>
-              <div className={styles.head}></div>
-              <div className={styles.body}></div>
+      <div className={styles.contentWrapper}>
+        <div className={styles.profileSection}>
+          <div className={styles.profilePic}>
+            {profileImage ? (
+              <img src={profileImage} alt="Profile" className={styles.actualPic} />
+            ) : (
+              <div className={styles.profileIcon}>
+                <div className={styles.head}></div>
+                <div className={styles.body}></div>
+              </div>
+            )}
+          </div>
+          {name && <div className={styles.userName}>{name}</div>}
+          <div className={styles.oneliner}>
+            {oneLiner ? oneLiner : 'Documenting thoughts with purpose.'}
+          </div>
+          <div className={styles.bioDiv}>
+            <div className={styles.bioHeading}>Bio</div>
+            <div className={styles.bio}>
+              {bio ? bio : 'Sharing thoughts and stories on Verbio — where ideas find their voice. Stay curious, stay inspired.'}
             </div>
-          )}
-        </div>
-        {name && <div className={styles.userName}>{name}</div>}
-        <div className={styles.oneliner}>
-          {oneLiner? oneLiner:'Documenting thoughts with purpose.'}
-        </div>
-        <div className={styles.bioDiv}>
-          <div className={styles.bioHeading}>Bio</div>
-          <div className={styles.bio}>
-            {bio? bio:'Sharing thoughts and stories on Verbio — where ideas find their voice. Stay curious, stay inspired.'}
+          </div>
+          <div className={styles.buttonDiv}>
+            <button className={styles.btn} onClick={handleWrite}>Write</button>
+            <button className={styles.btn} onClick={handleEdit}>Edit Profile</button>
           </div>
         </div>
-        <div className={styles.buttonDiv}>
-          <button className={styles.btn} onClick={handleWrite}>Write</button>
-          <button className={styles.btn} onClick={handleEdit}>Edit Profile</button>
+        <div className={styles.verticalLine}></div>
+        <div className={styles.blogSection}>
+          <div className={styles.eachBlog}>
+            hi
+          </div>
         </div>
       </div>
     </div>

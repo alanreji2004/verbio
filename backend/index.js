@@ -70,5 +70,33 @@ app.get('/getblog/:id',async (req,res)=>{
     }
 });
 
+app.get('/userblogs/:uid',verifyToken,async(req,res) =>{
+    const requestedUid = req.params.uid;
+
+    if(req.user.uid !== requestedUid){
+        return res.status(403).json({message : 'Unauthorized Acess'});
+    }
+
+    try{
+        const blogRef = db.collection('blogs');
+        const querySnapshot = await blogRef.where('authorId','==',requestedUid)
+        .orderBy('createdAt','desc')
+        .get();
+
+        if(querySnapshot.empty){
+            return res.status(200).json([]);
+        }
+
+        const blogs = querySnapshot.docs.map(doc =>({
+            id:doc.id,
+            ...doc.data()
+        }));
+
+        res.status(200).json(blogs);
+    }catch(error){
+        console.error('Error fetching user blogs:', error);
+        res.status(500).json({ message: 'Internal Server Error' });    
+    }
+});
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
