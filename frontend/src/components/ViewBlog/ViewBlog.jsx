@@ -42,52 +42,57 @@ const ViewBlog = () => {
     }
 
     useEffect(() =>{
-        setLoading(true);
-        const unsubscribe = onAuthStateChanged(auth,async(currentUser)=>{
-            if(currentUser){
-                setUser(currentUser);
-                const userDocRef = doc(db,'users',currentUser.uid);
-                const userDoc = await getDoc(userDocRef);
-                if(userDoc.exists()){
-                    const data = userDoc.data();
-                    if(data.photoURL){
-                        setPhoto(data.photoURL);
+        const fetchData = async() =>{
+            setLoading(true);
+            try{
+            const unsubscribe = onAuthStateChanged(auth,async(currentUser)=>{
+                if(currentUser){
+                    setUser(currentUser);
+                    
+                    const userDocRef = doc(db,'users',currentUser.uid);
+                    const userDoc = await getDoc(userDocRef);
+                    if(userDoc.exists()){
+                        const data = userDoc.data();
+                        if(data.photoURL){
+                            setPhoto(data.photoURL);
+                        }
+                        setName(data.name);
                     }
-                    setName(data.name);
                 }
-            }
+                if(blogId){
+                try{
+                    const response = await fetch(`${backendApi}/getblog/${blogId}`);
+
+                    if (response.status === 404) {
+                        toast.error('Blog not Found');
+                        setLoading(false);
+                        return;
+                    }
+                    if (!response.ok) throw new Error('Blog not found');
+
+                    const data = await response.json();
+
+                    if (data.createdAt && data.createdAt._seconds) {
+                        data.createdDate = new Date(data.createdAt._seconds * 1000);
+                    }
+
+                    setBlog(data);
+                }catch(err){
+                    console.error('Error fetching blog');
+                    toast.error('Unable to load blog');
+                    }
+                }
             setLoading(false);
         });
         return () => unsubscribe();
-    },[auth,navigate]);
-
-    useEffect(()=>{
-        const fetchBlog = async () =>{
-            setLoading(true);
-            try{
-                const response = await fetch(`${backendApi}/getblog/${blogId}`);
-
-                if (response.status === 404) {
-                    toast.error('Blog not Found');
-                    setLoading(false);
-                    return;
-                }
-                if (!response.ok) throw new Error('Blog not found');
-
-                const data = await response.json();
-
-                if (data.createdAt && data.createdAt._seconds) {
-                data.createdDate = new Date(data.createdAt._seconds * 1000);
-                }
-                setBlog(data);
-            }catch(err){
-                console.error('Error fetching blog');
-                toast.error('Unable to load blog');
-            }
-            setLoading(false);
+        }catch(err){
+            console.error("Error in fetching data", err);
+            toast.error("Something went wrong");
+            setLoading(false);        
         }
-        if (blogId) fetchBlog();
-    },[blogId]);
+    }; 
+    fetchData();
+    },[auth,navigate,blogId]);
 
     const handleShare = () =>{
         const blogLink = window.location.href;
