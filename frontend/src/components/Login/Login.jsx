@@ -20,7 +20,6 @@ const Login = () => {
 
     const location = useLocation();
     const from = location.state?.from || '/home';
-
     const handleSignupClick = () => {
       navigate('/signup', { state: {from}})
     }
@@ -135,7 +134,7 @@ const Login = () => {
           <Link to="/reset-password">Forgot Password?</Link>
         </div>
         <div className={styles.tosignup}>Don't have an account?
-            <Link to="/signup"> Sign up</Link>
+            <Link to="/signup" state={{from}}> Sign up</Link>
         </div>
       </div>
     </div>

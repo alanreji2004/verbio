@@ -22,9 +22,9 @@ const Signup = () => {
     const [password, setPassword] = useState('');
 
     const from = location.state?.from || '/home';
-    
+    console.log(Location.state);
     const handleLoginClick = () => {
-    navigate('/login',{ state: { from } })
+      navigate('/login',{ state: { from } })
     }
 
   const signUpWithGoogle = async () => {
