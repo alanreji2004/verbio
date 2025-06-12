@@ -143,6 +143,10 @@ const Profile = () => {
             ):(
               blogs.length > 0?(
                 blogs.map((blog,index) => (
+                  <Link to={`/blog/${blog.id}`}
+                    key={blog.id}
+                    style={{ textDecoration: 'none',color:'inherit' }}
+                  >
                   <div key={index} className={styles.eachBlog}>
                     <div className={styles.blogTitle}>{blog.title}</div>
                     <div className={styles.secondLine}>
@@ -162,6 +166,7 @@ const Profile = () => {
                     </div>
                     <div className={styles.blogContent}>{stripHtml(blog.content)?.split(' ').slice(0, 18).join(' ')}...</div>
                   </div>
+                  </Link>
                 ))
               ):(
                 <div>No blogs to show...</div>
