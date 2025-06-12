@@ -99,4 +99,25 @@ app.get('/userblogs/:uid',verifyToken,async(req,res) =>{
     }
 });
 
+app.get('/allblogs',async(req,res)=>{
+    try{
+        const blogsRef = db.collection('blogs');
+        const snapshot = await blogsRef.get();
+        
+        if(snapshot.empty){
+            res.status(200).json([]);
+        }
+
+        const blogs = snapshot.docs.map(doc =>({
+            id:doc.id,
+            ...doc.data()
+        }));
+
+        res.status(200).json(blogs);
+    }catch(error){
+        console.error('Error fetching blogs',error);
+        res.status(500).json({error:'Error fetching blogs'});
+    }
+});
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
