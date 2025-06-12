@@ -201,6 +201,12 @@ const ViewBlog = () => {
             toast.error("You must be loggedin to like!");
             return;
         }
+        const previouslyLiked = hasLiked;
+        const newHasLiked = !previouslyLiked;
+        const newLikesCount = previouslyLiked ? likesCount - 1 : likesCount + 1;
+
+        setHasLiked(newHasLiked);
+        setLikesCount(newLikesCount);
         const blogRef = doc(db,'blogs',blogId);
 
         try{
@@ -215,25 +221,18 @@ const ViewBlog = () => {
 
             if(hasLiked){
                 updatedLikedBy = currentLikedBy.filter(uid => uid !== user.uid);
-                await updateDoc(blogRef,{
-                    likedBy: updatedLikedBy,
-                    likes: updatedLikedBy.length,
-                });
-                setHasLiked(false);
-                setLikesCount(updatedLikedBy.length);
             }else{
                 updatedLikedBy = [...currentLikedBy,user.uid];
-
-                await updateDoc(blogRef,{
-                    likedBy: updatedLikedBy,
-                    likes: updatedLikedBy.length,
-                });
-                setHasLiked(true);
-                setLikesCount(updatedLikedBy.length);
-            }
+                }
+            await updateDoc(blogRef,{
+                likedBy: updatedLikedBy,
+                likes: updatedLikedBy.length,
+            });
         }catch(err){
             console.error("error toggling like",err);
             toast.error("Could not update like!")
+            setHasLiked(previouslyLiked);
+            setLikesCount(likesCount);
         }
     };
 
