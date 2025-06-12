@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { db, app } from '../../firebase';
+import { FaHeart } from 'react-icons/fa'
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -14,15 +15,26 @@ const Profile = () => {
   const [oneLiner, setOneLiner] = useState(null);
   const [bio, setBio] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [blogs, setBlogs] = useState([]);
+  const [blogLoading, setBlogLoading] = useState(true);
+  const backendApi = import.meta.env.VITE_BACKEND_API;
+
 
   useEffect(() => {
-    setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      const token = await auth.currentUser.getIdToken()
-      if (currentUser) {
-        setUser(currentUser);
+      
+      if (!currentUser) {
+        navigate('/login');
+        return;
+      }
+
+      setUser(currentUser);
+
+      const fetchProfile = async () =>{ 
+        
         const userDocRef = doc(db, 'users', currentUser.uid);
         const userDoc = await getDoc(userDocRef);
+
         if (userDoc.exists()) {
           const data = userDoc.data();
           if (data.photoURL) setProfileImage(data.photoURL);
@@ -30,10 +42,29 @@ const Profile = () => {
           if (data.oneLiner) setOneLiner(data.oneLiner);
           if (data.bio) setBio(data.bio);
         }
-      } else {
-        navigate('/login');
-      }
-      setLoading(false);
+      };
+
+      const fetchBlogs = async () =>{
+        try{
+          const token = await currentUser.getIdToken()
+          const res = await fetch(`${backendApi}/userblogs/${currentUser.uid}`,{
+            headers:{
+              Authorization:`Bearer ${token}`,
+            },
+          });
+
+          const data = await res.json();
+          setBlogs(data);
+          }catch (err) {
+            console.error('Error fetching blogs:', err);
+          }finally {
+        setBlogLoading(false);
+        }
+      };
+
+      setLoading(true);
+      await Promise.all([fetchProfile(),fetchBlogs()]);
+      setLoading(false);  
     });
     return () => unsubscribe();
   }, [auth, navigate]);
@@ -50,6 +81,13 @@ const Profile = () => {
   const handleWrite = () => {
     navigate('/write-story');
   };
+
+  const stripHtml = (html) => {
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    return div.textContent || div.innerText || '';
+  };
+
 
   return (
     <div className={styles.wrapper}>
@@ -91,9 +129,35 @@ const Profile = () => {
         </div>
         <div className={styles.verticalLine}></div>
         <div className={styles.blogSection}>
-          <div className={styles.eachBlog}>
-            hi
-          </div>
+            {blogLoading?(
+              <div>Loading Blogs...</div>
+            ):(
+              blogs.length > 0?(
+                blogs.map((blog,index) => (
+                  <div key={index} className={styles.eachBlog}>
+                    <div className={styles.blogTitle}>{blog.title}</div>
+                    <div className={styles.secondLine}>
+                      <div className={styles.dateSection}>
+                          <div className={styles.date}>
+                              {blog.createdDate && new Date(blog.createdDate).toLocaleDateString('en-US', {
+                                  year: 'numeric',
+                                  month: 'long',
+                                  day: 'numeric',
+                               })}
+                          </div>                      
+                      </div>
+                      <div className={styles.likeSection}>
+                        <FaHeart />
+                        <div className={styles.likeCount}>{blog.likes}</div>
+                      </div>
+                    </div>
+                    <div className={styles.blogContent}>{stripHtml(blog.content)?.split(' ').slice(0, 20).join(' ')}...</div>
+                  </div>
+                ))
+              ):(
+                <div>No blogs to show...</div>
+              )
+            )}
         </div>
       </div>
     </div>
