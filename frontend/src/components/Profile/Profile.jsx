@@ -7,6 +7,7 @@ import { db, app } from '../../firebase';
 import { FaHeart } from 'react-icons/fa';
 import noblogs from '../../assets/noblogs.webp';
 import fallback from '../../assets/fallback.webp';
+import { FaTrash } from 'react-icons/fa';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -155,7 +156,10 @@ const Profile = () => {
                     style={{ textDecoration: 'none',color:'inherit' }}
                   >
                   <div key={index} className={styles.eachBlog}>
-                    <div className={styles.blogTitle}>{blog.title}</div>
+                    <div className={styles.firstLine}>
+                      <div className={styles.blogTitle}>{blog.title}</div>
+                      <FaTrash className={styles.deleteBtn}/>
+                    </div>
                     <div className={styles.secondLine}>
                       <div className={styles.dateSection}>
                           <div className={styles.date}>

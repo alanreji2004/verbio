@@ -191,6 +191,12 @@ body {
   }
 }
 
+.blogTitle {
+    font-size: 1.2rem;
+    font-weight: 600;
+    width: 500px;
+  }
+
 @media screen and (max-width: 1024px) {
   .contentWrapper {
     flex-direction: column;
@@ -228,6 +234,7 @@ body {
   .blogTitle {
     font-size: 1.2rem;
     font-weight: 600;
+    width: 300px;
   }
 
   .date {
@@ -240,6 +247,7 @@ body {
     font-size: 1rem;
     font-weight: 350;
   }
+
 }
 
 @media screen and (max-width: 480px) {
@@ -295,6 +303,7 @@ body {
 
   .blogTitle {
     font-size: 1.1rem;
+    width: 300px;
   }
 
   .blogContent {
@@ -354,4 +363,17 @@ body {
 .noBlogContent{
   font-size: 1.25rem;
   font-weight: 500;
+}
+.firstLine{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.deleteBtn{
+  color: #8a6c50;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
 }
