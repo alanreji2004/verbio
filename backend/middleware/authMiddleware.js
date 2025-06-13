@@ -1,4 +1,4 @@
-const {admin} = require('../firebase')
+const {admin,db} = require('../firebase')
 
 const verifyToken = async (req,res,next) => {
     const authHeader = req.headers.authorization;  
@@ -11,7 +11,24 @@ const verifyToken = async (req,res,next) => {
 
     try{
         const decoded = await admin.auth().verifyIdToken(token);
-        req.user = decoded;
+        const uid = decoded.uid;
+        let name = decoded.name;
+
+        if(!name){
+            const userDoc = await db.collection('users').doc(uid).get();
+            if(userDoc.exists){
+                name = userDoc.data().name||'unknown';
+            }
+            else{
+                name = 'unknown'
+            }
+        }
+
+        req.user = {
+            uid,
+            name
+        }
+
         next()
     }
     catch(err){
