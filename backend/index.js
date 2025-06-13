@@ -120,4 +120,27 @@ app.get('/allblogs',async(req,res)=>{
     }
 });
 
+app.delete('/usersblog/:id',verifyToken,async(req,res)=>{
+    const blogId = req.params.id;
+    const userId = req.user.uid;
+
+    try{
+        const blogRef = db.collection('blogs').doc(blogId);
+        const blogDoc = await blogRef.get();
+
+        if(!blogDoc.exists){
+            return res.status(404).json({message : 'blog not found'});
+        }
+
+        const blogData = blogDoc.data();
+        if(blogData.authorId !== req.user.uid){
+            return res.status(403).json({message:'Unauthorized acess'});
+        }
+        await blogRef.delete();
+        res.status(200).json({message:'Blog deleted'});
+    }catch(error){
+        res.status(500).json({message:'Failed to delete blog'});
+    }
+});
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

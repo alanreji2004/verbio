@@ -49,6 +49,7 @@ const Profile = () => {
       const fetchBlogs = async () =>{
         try{
           const token = await currentUser.getIdToken()
+          console.log(token);
           const res = await fetch(`${backendApi}/userblogs/${currentUser.uid}`,{
             headers:{
               Authorization:`Bearer ${token}`,
@@ -177,7 +178,6 @@ const Profile = () => {
               ):(
                 <div className={styles.noBlog}>
                   <img src={noblogs} alt="" className={styles.noBlogsimg} />
-                  <div className={styles.noBlogContent}>No Blogs to show...Write something!</div>
                 </div>
               )
             )}

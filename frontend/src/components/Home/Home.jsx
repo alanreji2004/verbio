@@ -102,7 +102,7 @@ const Home = () => {
           </div>
         </div>
       </nav>
-      <div className={styles.firstHeading}>Suggested for {name}!</div>
+      <div className={styles.firstHeading}>Suggested for you!</div>
       <div className={styles.contentDiv}>
       <div className={styles.blogSection}>
         {blogLoading?(

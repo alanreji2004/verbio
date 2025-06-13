@@ -67,6 +67,7 @@ const ViewBlog = () => {
                     if (response.status === 404) {
                         toast.error('Blog not Found');
                         setLoading(false);
+                        navigate('*',{ replace: true });
                         return;
                     }
                     if (!response.ok) throw new Error('Blog not found');
