@@ -362,3 +362,20 @@ body {
   font-size: 1.1rem;
   font-weight: 350;
 }
+
+.noBlog{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.noBlogsimg{
+  width: 400px;
+  height: 400px;
+}
+
+.noBlogContent{
+  font-size: 1.25rem;
+  font-weight: 500;
+}

@@ -4,7 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { db, app } from '../../firebase';
-import { FaHeart } from 'react-icons/fa'
+import { FaHeart } from 'react-icons/fa';
+import noblogs from '../../assets/noblogs.png';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -113,7 +114,7 @@ const Profile = () => {
         <div className={styles.profileSection}>
           <div className={styles.profilePic}>
             {profileImage ? (
-              <img src={profileImage} alt="Profile" className={styles.actualPic} />
+              <img src={profileImage} alt="" className={styles.actualPic} />
             ) : (
               <div className={styles.profileIcon}>
                 <div className={styles.head}></div>
@@ -169,7 +170,10 @@ const Profile = () => {
                   </Link>
                 ))
               ):(
-                <div>No blogs to show...</div>
+                <div className={styles.noBlog}>
+                  <img src={noblogs} alt="" className={styles.noBlogsimg} />
+                  <div className={styles.noBlogContent}>No Blogs to show...Write something!</div>
+                </div>
               )
             )}
         </div>
