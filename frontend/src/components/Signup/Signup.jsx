@@ -21,7 +21,6 @@ const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const from = location.state?.from || '/home';
     console.log(Location.state);
     const handleLoginClick = () => {
       navigate('/login',{ state: { from } })
@@ -48,7 +47,7 @@ const Signup = () => {
           lastLogin: new Date()
         }, { merge: true })
       }
-      navigate(from, { replace: true })
+      navigate('/home')
     } catch (error) {
       setError("Sign in Failed, Try again..")
     } finally {

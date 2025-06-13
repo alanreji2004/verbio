@@ -5,7 +5,8 @@ import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { db, app } from '../../firebase';
 import { FaHeart } from 'react-icons/fa';
-import noblogs from '../../assets/noblogs.png';
+import noblogs from '../../assets/noblogs.webp';
+import fallback from '../../assets/fallback.webp';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -114,11 +115,15 @@ const Profile = () => {
         <div className={styles.profileSection}>
           <div className={styles.profilePic}>
             {profileImage ? (
-              <img src={profileImage} alt="" className={styles.actualPic} />
+              <img src={profileImage} alt="" className={styles.actualPic} 
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = fallback;
+                  }}
+              />
             ) : (
               <div className={styles.profileIcon}>
-                <div className={styles.head}></div>
-                <div className={styles.body}></div>
+                <img src={fallback} alt="" className={styles.fallback} />
               </div>
             )}
           </div>

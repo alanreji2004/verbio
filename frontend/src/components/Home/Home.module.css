@@ -310,9 +310,12 @@ body {
         top: 25.5rem;
     }
 }
+.firstHeading{
+  margin-top: 3rem;
+}
 .contentDiv{
   z-index: 2;
-  margin-top: 4rem;
+  margin-top: 2rem;
 }
 .blogSection {
   flex: 1;
@@ -375,6 +378,7 @@ body {
   color: #8a6c50;
   cursor: pointer;
 }
+
 
 @media screen and (max-width: 1024px) {
   .contentWrapper {
@@ -466,6 +470,6 @@ body {
   gap: 10px;
 }
 .firstHeading{
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   font-weight: 500;
 }

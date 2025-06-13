@@ -39,9 +39,7 @@ const VerifyEmail = () => {
             lastLogin: new Date()
           });
         }
-        const redirectPath = localStorage.getItem("redirectAfterVerify") || '/profile';
-        localStorage.removeItem("redirectAfterVerify");
-        navigate(redirectPath, { replace: true });
+        navigate('/profile');
       }
     }, 5000);
 
