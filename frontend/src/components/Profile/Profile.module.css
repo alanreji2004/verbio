@@ -249,6 +249,7 @@ body {
     font-size: 1.2rem;
     font-weight: 600;
     width: 300px;
+    max-width: 100%;
   }
 
   .date {
@@ -312,11 +313,13 @@ body {
     max-width: 370px;
     height: auto;
     padding: 1rem;
+    overflow: hidden;
   }
 
   .blogTitle {
     font-size: 1.1rem;
-    width: 300px;
+    width: 250px;
+    max-width: 100%;
   }
 
   .blogContent {
@@ -449,5 +452,16 @@ body {
   .deleteModalButton,
   .cancelButton {
     width: 100%;
+  }
+
+    .firstLine {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+
+  .eachBlog {
+    padding: 1rem 0.75rem;
   }
 }
