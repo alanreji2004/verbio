@@ -21,7 +21,6 @@ const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    console.log(Location.state);
     const handleLoginClick = () => {
       navigate('/login',{ state: { from } })
     }

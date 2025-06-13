@@ -183,12 +183,14 @@ const Profile = () => {
                         >
                         <div className={styles.blogTitle}>{blog.title}</div>
                       </Link>
-                      <FaTrash className={styles.deleteBtn}
+                      <div>
+                                              <FaTrash className={styles.deleteBtn}
                       onClick={(e)=>{
                         e.stopPropagation();
                         setSelectedBlogId(blog.id);
                         setShowConfirmModal(true);
                       }}/>
+                      </div>
                     </div>
                     <div className={styles.secondLine}>
                       <div className={styles.dateSection}>
