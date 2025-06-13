@@ -8,6 +8,7 @@ import { FaHeart } from 'react-icons/fa';
 import noblogs from '../../assets/noblogs.webp';
 import fallback from '../../assets/fallback.webp';
 import { FaTrash } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -21,6 +22,8 @@ const Profile = () => {
   const [blogs, setBlogs] = useState([]);
   const [blogLoading, setBlogLoading] = useState(true);
   const backendApi = import.meta.env.VITE_BACKEND_API;
+  const [showConfirmModal,setShowConfirmModal] = useState(false);
+  const [selectedBlogId,setSelectedBlogId] = useState(null);
 
 
   useEffect(() => {
@@ -50,7 +53,6 @@ const Profile = () => {
       const fetchBlogs = async () =>{
         try{
           const token = await currentUser.getIdToken()
-          console.log(token);
           const res = await fetch(`${backendApi}/userblogs/${currentUser.uid}`,{
             headers:{
               Authorization:`Bearer ${token}`,
@@ -99,6 +101,29 @@ const Profile = () => {
     const div = document.createElement('div');
     div.innerHTML = html;
     return div.textContent || div.innerText || '';
+  };
+
+  const handleDelete = async(blogId) =>{
+    try{
+      const token = await user.getIdToken();
+
+      const res = await fetch(`${backendApi}/usersblog/${blogId}`,{
+        method:'DELETE',
+        headers:{
+          Authorization:`Bearer ${token}`,
+        },
+      });
+
+      if(!res.ok){
+        throw new Error('Failed to Delete blog');
+      }
+
+      toast.success('Blog Deleted')
+      setBlogs(prevBlogs => prevBlogs.filter(blog => blog.id !== blogId));
+    }catch(error){
+      console.error('Delete error:',error);
+      toast.error('Failed to delete Blog');
+    }
   };
 
 
@@ -151,14 +176,19 @@ const Profile = () => {
             ):(
               blogs.length > 0?(
                 blogs.map((blog,index) => (
-                  <Link to={`/blog/${blog.id}`}
-                    key={blog.id}
-                    style={{ textDecoration: 'none',color:'inherit' }}
-                  >
                   <div key={index} className={styles.eachBlog}>
                     <div className={styles.firstLine}>
-                      <div className={styles.blogTitle}>{blog.title}</div>
-                      <FaTrash className={styles.deleteBtn}/>
+                      <Link to={`/blog/${blog.id}`}
+                        style={{ textDecoration: 'none',color:'inherit' }}
+                        >
+                        <div className={styles.blogTitle}>{blog.title}</div>
+                      </Link>
+                      <FaTrash className={styles.deleteBtn}
+                      onClick={(e)=>{
+                        e.stopPropagation();
+                        setSelectedBlogId(blog.id);
+                        setShowConfirmModal(true);
+                      }}/>
                     </div>
                     <div className={styles.secondLine}>
                       <div className={styles.dateSection}>
@@ -177,7 +207,6 @@ const Profile = () => {
                     </div>
                     <div className={styles.blogContent}>{stripHtml(blog.content)?.split(' ').slice(0, 18).join(' ')}...</div>
                   </div>
-                  </Link>
                 ))
               ):(
                 <div className={styles.noBlog}>
@@ -187,6 +216,36 @@ const Profile = () => {
             )}
         </div>
       </div>
+      {showConfirmModal && (
+        <div className={styles.modalOverlay}
+          onClick={()=>{
+            setSelectedBlogId(null);
+            setShowConfirmModal(false);
+          }}
+        >
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <div>Are you sure you want to delete the blog?</div>
+            <div className={styles.modalButton}>
+              <button className={styles.deleteModalButton}
+              onClick={()=>{
+                handleDelete(selectedBlogId);
+                setShowConfirmModal(false);
+              }}
+              >
+               yes
+              </button>
+              <button className={styles.cancelButton}
+              onClick={()=>{
+                setSelectedBlogId(null);
+                setShowConfirmModal(false);
+              }}
+              >
+                cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
