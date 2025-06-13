@@ -39,7 +39,7 @@ const VerifyEmail = () => {
             lastLogin: new Date()
           });
         }
-        navigate('/profile');
+        navigate('/home');
       }
     }, 5000);
 

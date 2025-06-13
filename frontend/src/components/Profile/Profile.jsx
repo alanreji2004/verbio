@@ -9,6 +9,7 @@ import noblogs from '../../assets/noblogs.webp';
 import fallback from '../../assets/fallback.webp';
 import { FaTrash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import loadingImg from '../../assets/loading.webp';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -172,7 +173,9 @@ const Profile = () => {
         <div className={styles.verticalLine}></div>
         <div className={styles.blogSection}>
             {blogLoading?(
-              <div>Loading Blogs...</div>
+              <div className={styles.loadingImgDiv}>
+                <img src={loadingImg} className={styles.loadingImg} alt="" />
+              </div>
             ):(
               blogs.length > 0?(
                 blogs.map((blog,index) => (
@@ -184,7 +187,7 @@ const Profile = () => {
                         <div className={styles.blogTitle}>{blog.title}</div>
                       </Link>
                       <div>
-                                              <FaTrash className={styles.deleteBtn}
+                      <FaTrash className={styles.deleteBtn}
                       onClick={(e)=>{
                         e.stopPropagation();
                         setSelectedBlogId(blog.id);

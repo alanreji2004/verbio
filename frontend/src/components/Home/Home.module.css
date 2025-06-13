@@ -476,5 +476,25 @@ body {
 .firstHeading{
   font-size: 1.8rem;
   font-weight: 500;
+}
 
+.loadingImg{
+  width: 450px;
+  height: 300px;
+}
+
+@media screen and (max-width:768) {
+  .loadingImg{
+    width: 330px;
+    height: 300px;
+}
+}
+@media screen and (max-width:480px) {
+  .loadingImg{
+    width: 230px;
+    height: 200px;
+    position: fixed;
+    top: 20%;
+    left: 8%;
+}
 }

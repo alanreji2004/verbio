@@ -355,11 +355,15 @@ body {
   align-items: center;
 }
 
-.noBlogsimg {
+.noBlogsimg{
   width: 400px;
   height: 400px;
 }
-
+.loadingImg{
+  width: 400px;
+  height: 350px;
+  margin-top: 5rem;
+}
 .noBlogContent {
   font-size: 1.25rem;
   font-weight: 500;

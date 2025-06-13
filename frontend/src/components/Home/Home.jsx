@@ -7,6 +7,7 @@ import { db, app } from '../../firebase';
 import person from '../../assets/person.png'
 import write from '../../assets/write.png'
 import { FaHeart } from 'react-icons/fa'
+import loadingImg from '../../assets/loading.webp'
 
 const Home = () => {
 
@@ -106,7 +107,9 @@ const Home = () => {
       <div className={styles.contentDiv}>
       <div className={styles.blogSection}>
         {blogLoading?(
-          <div>Loading Blogs...</div>
+          <div className={styles.loadingDiv}>
+            <img src={loadingImg} alt="" className={styles.loadingImg} />
+          </div>
             ):(
               blogs.length > 0?(
                 blogs.map((blog,index) => (
