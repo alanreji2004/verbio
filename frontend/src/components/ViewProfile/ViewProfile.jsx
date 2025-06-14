@@ -10,6 +10,8 @@ import fallback from '../../assets/fallback.webp';
 import loadingImg from '../../assets/loading.webp';
 import person from '../../assets/person.png';
 import write from '../../assets/write.png';
+import share from '../../assets/share.png';
+import { toast } from 'react-toastify';
 
 const ViewProfile = () => {
   const { id: userId } = useParams();
@@ -32,6 +34,9 @@ const ViewProfile = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
+        if(user.uid === userId){
+            navigate('/profile');
+        }
         setCurrentUser(user);
         const userDoc = await getDoc(doc(db, 'users', user.uid));
         if (userDoc.exists()) {
@@ -83,6 +88,13 @@ const ViewProfile = () => {
 
   const handleWrite = () => navigate('/write-story');
   const handleProfile = () => navigate('/profile');
+
+const handleShare = () =>{
+    const shareUrl = `${window.location.origin}/user/${userId}`;
+    navigator.clipboard.writeText(shareUrl).then(() => {
+    toast.success('Profile link copied to clipboard!');
+    }); 
+};
 
   return (
     <div className={styles.wrapper}>
@@ -138,6 +150,10 @@ const ViewProfile = () => {
               {bio || 'Sharing thoughts and stories on Verbio — where ideas find their voice. Stay curious, stay inspired.'}
             </div>
           </div>
+            <div className={styles.share} onClick={handleShare}>
+                <img src={share} alt="share" className={styles.shareIcon} />
+                <div className={styles.shareText}>Share</div>
+        </div>    
         </div>
         <div className={styles.verticalLine}></div>
         <div className={styles.blogSection}>

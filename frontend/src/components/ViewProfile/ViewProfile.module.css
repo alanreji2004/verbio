@@ -381,3 +381,15 @@ body {
     gap: 0.5rem;
   }
 }
+.share{
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+.shareIcon{
+  width: 24px;
+  height: 24px;
+}

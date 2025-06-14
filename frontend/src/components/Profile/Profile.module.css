@@ -473,3 +473,16 @@ body {
     padding: 1rem 0.75rem;
   }
 }
+
+.share{
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+.shareIcon{
+  width: 24px;
+  height: 24px;
+}

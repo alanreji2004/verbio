@@ -10,6 +10,7 @@ import fallback from '../../assets/fallback.webp';
 import { FaTrash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import loadingImg from '../../assets/loading.webp';
+import share from '../../assets/share.png';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -127,6 +128,12 @@ const Profile = () => {
     }
   };
 
+  const handleShare = () =>{
+    const shareUrl = `${window.location.origin}/user/${user.uid}`;
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      toast.success('Profile link copied to clipboard!');
+    }); 
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -165,6 +172,10 @@ const Profile = () => {
               {bio ? bio : 'Sharing thoughts and stories on Verbio — where ideas find their voice. Stay curious, stay inspired.'}
             </div>
           </div>
+          <div className={styles.share} onClick={handleShare}>
+            <img src={share} alt="share" className={styles.shareIcon} />
+            <div className={styles.shareText}>Share</div>
+          </div>          
           <div className={styles.buttonDiv}>
             <button className={styles.btn} onClick={handleWrite}>Write</button>
             <button className={styles.btn} onClick={handleEdit}>Edit Profile</button>
