@@ -492,9 +492,9 @@ body {
 @media screen and (max-width:480px) {
   .loadingImg{
     width: 230px;
-    height: 200px;
+    height: 160px;
     position: fixed;
-    top: 20%;
-    left: 8%;
+    top: 28%;
+    left: 5%;
 }
 }
