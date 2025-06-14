@@ -5,7 +5,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db, app } from '../../firebase';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { FaHeart } from 'react-icons/fa';
-import noblogs from '../../assets/noblogs.webp';
+import noblogs from '../../assets/usernoblogs.webp';
 import fallback from '../../assets/fallback.webp';
 import loadingImg from '../../assets/loading.webp';
 import person from '../../assets/person.png';

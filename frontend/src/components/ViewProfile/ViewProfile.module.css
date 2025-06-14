@@ -265,6 +265,7 @@ body {
 .noBlogsimg {
   width: 400px;
   height: 400px;
+  margin-top: 5rem;
 }
 
 .loadingImg {
