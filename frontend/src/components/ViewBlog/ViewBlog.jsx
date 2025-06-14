@@ -237,6 +237,16 @@ const ViewBlog = () => {
         }
     };
 
+    const handleAuthorClick = (authorId)=>{
+        if(!authorId) return;
+
+        if(user && authorId === user.uid){
+            navigate('/profile');
+        }else{
+            navigate(`/user/${authorId}`);
+        }
+    };
+
   return (
     <div className={styles.mainDiv}>
       {loading && <div className={styles.spinner}></div>}
@@ -268,7 +278,10 @@ const ViewBlog = () => {
                     <div className={styles.heading}>{blog.title}</div>
                 </div>
                 <div className={styles.nameAndDate}>
-                    <div className={styles.authorName}>{blog.authorName}</div>
+                    <div className={styles.authorName}
+                        onClick={() =>handleAuthorClick(blog.authorId)}
+                        style={{cursor:'pointer'}}
+                    >{blog.authorName}</div>
                     <div className={styles.date}>
                         {blog.createdDate && blog.createdDate.toLocaleDateString('en-US', {
                             year: 'numeric',

@@ -17,6 +17,7 @@ import EditProfile from "./components/EditProfile/EditProfile"
 import WriteBlog from "./components/WriteBlog/WriteBlog"
 import ViewBlog from "./components/ViewBlog/ViewBlog"
 import NotFound from "./components/NotFound/NotFound"
+import ViewProfile from "./components/ViewProfile/ViewProfile"
 
 
 const router = createBrowserRouter([
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
   {
     path: "/blog/:id",
     element: <ViewBlog />,
+  },
+  {
+    path: "/user/:id",
+    element: <ViewProfile />,
   },
   {
     path: "*",

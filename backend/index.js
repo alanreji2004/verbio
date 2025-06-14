@@ -143,4 +143,28 @@ app.delete('/usersblog/:id',verifyToken,async(req,res)=>{
     }
 });
 
+app.get('/publicblogs/:userId',async(req,res)=>{
+    const {userId} = req.params;
+    try{
+        const blogsRef = db.collection('blogs');
+        const snapshot = await blogsRef.where('authorId','==',userId)
+        .orderBy('createdAt','desc')
+        .get();
+
+        if(snapshot.empty){
+            return res.status(200).json([]);
+        }
+
+        const blogs = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        return res.status(200).json(blogs);
+    }catch(error){
+        console.error('Error fetching public blogs:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
