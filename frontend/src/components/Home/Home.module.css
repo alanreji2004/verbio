@@ -498,3 +498,11 @@ body {
     left: 5%;
 }
 }
+
+.searchContainer{
+  margin-top: 3rem;
+}
+.searchInput{
+  background-color: #FDF8F3;
+  border: 0.2px solid rgb(196, 196, 196);
+}

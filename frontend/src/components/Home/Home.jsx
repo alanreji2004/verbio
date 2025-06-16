@@ -11,24 +11,26 @@ import loadingImg from '../../assets/loading.webp'
 
 const Home = () => {
 
-    const navigate = useNavigate()
-    const auth = getAuth(app);
-    const [user,setUser] = useState(null);
-    const [photo,setPhoto] = useState(null);
-    const [name,setName] = useState(null);
-    const [loading,setLoading] = useState(false);
-    const [blogs, setBlogs] = useState([]);
-    const [blogLoading, setBlogLoading] = useState(true);
-    const backendApi = import.meta.env.VITE_BACKEND_API;
-    const handleToProfile = () => {
-        navigate('/profile');
-    };
+  const navigate = useNavigate()
+  const auth = getAuth(app);
+  const [user,setUser] = useState(null);
+  const [photo,setPhoto] = useState(null);
+  const [name,setName] = useState(null);
+  const [loading,setLoading] = useState(false);
+  const [blogs, setBlogs] = useState([]);
+  const [blogLoading, setBlogLoading] = useState(true);
+  const backendApi = import.meta.env.VITE_BACKEND_API;
+  const [searchTerm, setSearchTerm] = useState('');
 
-    const handleWrite = () =>{
+  const handleToProfile = () => {
+    navigate('/profile');
+  };
+
+  const handleWrite = () =>{
     navigate('/write-story');
-    }
+  }
 
-    useEffect(() => {
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       
       if (!currentUser) {
@@ -103,7 +105,15 @@ const Home = () => {
           </div>
         </div>
       </nav>
-      <div className={styles.firstHeading}>Suggested for you!</div>
+      <div className={styles.searchContainer}>
+        <input
+        type="text"
+        placeholder="Search by title or author"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className={styles.searchInput}
+      />
+      </div>
       <div className={styles.contentDiv}>
       <div className={styles.blogSection}>
         {blogLoading?(
@@ -112,7 +122,11 @@ const Home = () => {
           </div>
             ):(
               blogs.length > 0?(
-                blogs.map((blog,index) => (
+                blogs.filter(blog =>
+                  blog.title.toLowerCase().includes(searchTerm.toLowerCase())||
+                  blog.authorName.toLowerCase().includes(searchTerm.toLowerCase())
+                )
+                .map((blog,index) => (
                   <Link to={`/blog/${blog.id}`}
                     key={blog.id}
                       style={{ textDecoration: 'none',color:'inherit' }}
