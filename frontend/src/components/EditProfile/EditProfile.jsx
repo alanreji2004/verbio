@@ -131,7 +131,7 @@ const EditProfile = () => {
           <div className={styles.clickText}>Click image to edit</div>
           <input type="text" value={name} placeholder="Your Name" onChange={(e) => handleInputChange(e, setName)} className={styles.input} />
           <input type="text" value={oneLiner} placeholder="One-liner (max 25 chars)" onChange={(e) => handleInputChange(e, setOneLiner)} className={styles.input} />
-          <input type="text" value={bio} placeholder="Bio (max 100 chars)" onChange={(e) => handleInputChange(e, setBio)} className={styles.input} />
+          <input type="text" value={bio} placeholder="Bio (max 100 chars)" onChange={(e) => handleInputChange(e, setBio)} className={styles.descInput} />
           <div className={styles.buttons}>
             <button className={styles.btn} onClick={handleCancel}>Cancel</button>
             <button className={styles.btn} onClick={handleSave} disabled={!isModified}>Save</button>
