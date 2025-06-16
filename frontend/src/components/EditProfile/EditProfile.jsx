@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './EditProfile.module.css';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
@@ -102,6 +102,13 @@ const EditProfile = () => {
     navigate('/profile');
   };
 
+  const bioRef = useRef(null);
+  useEffect(()=>{
+    if(bioRef.current && originalData.bio){
+      bioRef.current.textContent = originalData.bio;
+    }
+  },[originalData.bio]);
+
   return (
     <div className={styles.mainDiv}>
         {loading && <div className={styles.spinner}></div>}
@@ -132,6 +139,7 @@ const EditProfile = () => {
           <input type="text" value={name} placeholder="Your Name" onChange={(e) => handleInputChange(e, setName)} className={styles.input} />
           <input type="text" value={oneLiner} placeholder="One-liner (max 25 chars)" onChange={(e) => handleInputChange(e, setOneLiner)} className={styles.input} />
           <div
+            ref={bioRef}
             contentEditable
             className={styles.descInput}
             placeholder="Bio (max 100 chars)"
@@ -140,7 +148,6 @@ const EditProfile = () => {
               setBio(text);
               setIsModified(true);
             }}
-            dangerouslySetInnerHTML={{ __html: bio }}
           />
           <div className={styles.buttons}>
             <button className={styles.btn} onClick={handleCancel}>Cancel</button>
