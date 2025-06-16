@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client"
 import {
   createBrowserRouter,
   RouterProvider,
+  useLocation,
 } from "react-router-dom"
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -18,52 +19,75 @@ import WriteBlog from "./components/WriteBlog/WriteBlog"
 import ViewBlog from "./components/ViewBlog/ViewBlog"
 import NotFound from "./components/NotFound/NotFound"
 import ViewProfile from "./components/ViewProfile/ViewProfile"
+import ReactGA from "react-ga4";
 
+ReactGA.initialize("G-9Z4S3ZW72H")
+
+function GA4PageTracker() {
+  const location = useLocation()
+
+  React.useEffect(() => {
+    ReactGA.send({ hitType: "pageview", page: location.pathname })
+  }, [location])
+
+  return null
+}
+
+function withTracking(Component) {
+  return function TrackedComponent(props) {
+    return (
+      <>
+        <GA4PageTracker />
+        <Component {...props} />
+      </>
+    );
+  };
+}
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Landing />,
+    element: withTracking(Landing)(),
   },
   {
     path: "/login",
-    element: <Login />,
+    element: withTracking(Login)(),
   },
   {
     path: "/signup",
-    element: <Signup />,
+    element: withTracking(Signup)(),
   },
     {
     path: "/home",
-    element: <Home />,
+    element: withTracking(Home)(),
   },
   {
     path: "/verify-email",
-    element: <VerifyEmail />,
+    element: withTracking(VerifyEmail)(),
   },
   {
     path: "/profile",
-    element: <Profile />,
+    element: withTracking(Profile)(),
   },
   {
     path: "/reset-password",
-    element: <ResetPassword />,
+    element: withTracking(ResetPassword)(),
   },
   {
     path: "/edit-profile",
-    element: <EditProfile />,
+    element: withTracking(EditProfile)(),
   },
   {
     path: "/write-story",
-    element: <WriteBlog />,
+    element:withTracking(WriteBlog)(),
   },
   {
     path: "/blog/:id",
-    element: <ViewBlog />,
+    element: withTracking(ViewBlog)(),
   },
   {
     path: "/user/:id",
-    element: <ViewProfile />,
+    element: withTracking(ViewProfile)(),
   },
   {
     path: "*",
