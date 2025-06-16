@@ -88,7 +88,7 @@ const Profile = () => {
 
   const handleSignOut = async () => {
     await signOut(auth);
-    navigate('/');
+    navigate('/login',{replace:true});
   };
 
   const handleEdit = () => {
