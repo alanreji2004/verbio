@@ -64,7 +64,7 @@ const Landing = () => {
           The art of <br />blog writing
         </div>
         <div className={styles.subHeading}>
-          Express your ideas an share <br />your stories with the world
+          Express your ideas and share <br />your stories with the world
         </div>
         <div className={styles.buttonDiv}>
           <button className={styles.getStarted} onClick={handleGetStarted}>Get Started</button>
