@@ -318,9 +318,6 @@ body {
   margin-top: 2rem;
 }
 .blogSection {
-  flex: 1;
-  overflow-y: auto;
-  height: 100%;
   padding-right: 1rem;
   display: flex;
   flex-direction: column;
