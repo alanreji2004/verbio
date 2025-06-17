@@ -327,6 +327,7 @@ body {
 }
 
 .eachBlog {
+  min-height: 150px;
   height: auto;
   width: 100%;
   max-width: 800px;
